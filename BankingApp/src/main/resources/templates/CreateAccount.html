@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Create Account</title>
+</head>
+<body>
+
+<form action="createaccount" method="post" th:object="${create}">
+ <pre>		
+ 
+ <input type="text" name="name" placeholder="Name" th:field="*{cname}" required> </br>
+ <input type="text" name="address" placeholder="Address" th:field="*{address}" required></br>
+ <input type="text" name="mobile" placeholder="Mobile No." th:field="*{mobile}" required></br>
+ 
+ <input type="submit" value="Create Account">  
+  
+ 
+</pre>
+</form>
+
+</body>
+</html>
