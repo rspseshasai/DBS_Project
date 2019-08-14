@@ -8,8 +8,8 @@
 <form action="homepage" method="post" th:object="${authenticate}">
  <pre>		
  
- <input type="text" name="cid" placeholder="Customer Id"   th:field="*{id}" required> </br>
- <input type="text" name="password" placeholder="Password"  th:field="*{password}" required></br>
+ CustomerId: <input type="text" name="cid" placeholder="Customer Id"   th:field="*{id}" > </br>
+ Password: <input type="text" name="password" placeholder="Password"  th:field="*{password}" required></br>
   
  <input type="submit" value="Login">  
  

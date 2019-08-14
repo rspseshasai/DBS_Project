@@ -11,7 +11,6 @@ import javax.persistence.Table;
 public class LoginData {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String password;
 	private String type;

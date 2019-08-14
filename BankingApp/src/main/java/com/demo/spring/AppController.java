@@ -15,6 +15,7 @@ import com.demo.spring.entity.LoginData;
 @RestController
 public class AppController{
 	
+	private int currentId;
 	
 	@Autowired
 	private LoginDataRepo ldr;
@@ -78,7 +79,10 @@ public class AppController{
 	@PostMapping(path = "/createaccount")
 	public ModelAndView processCreateAccount(@ModelAttribute("create") Customers cs) {
 		ModelAndView mv = new ModelAndView();
+
 		cRepo.save(cs);
+		currentId=cs.getCid();
+		System.out.println(currentId);
 		mv.setViewName("redirect:setpassword");
 		return mv;
 	}
@@ -132,6 +136,7 @@ public class AppController{
 	public ModelAndView processSetPassword(@ModelAttribute("setpass") LoginData ld) {
 		System.out.println("post setpass");
 		ModelAndView mv = new ModelAndView();
+		ld.setId(currentId);
 		ld.setType("Customer");
 		ldr.save(ld);
 		mv.setViewName("redirect:success");

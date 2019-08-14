@@ -16,9 +16,9 @@ public class CustServiceApplication {
 	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setUrl("jdbc:mysql://localhost:3306/springdb");
+		ds.setUrl("jdbc:mysql://localhost:3306/bankdb?serverTimezone=GMT-6");
 		ds.setUsername("root");
-		ds.setPassword("pavansai");
+		ds.setPassword("password");
 		return ds;
 
 	}
