@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Fund Transfer</title>
 </head>
 <body>
 
-<form action="transferfunds" method="post">
+<form action="transferfunds" method="post" th:object="${transact}">
  <pre>		
  
- <input type="text" name="accno" placeholder="Account No." required> </br>
- <input type="text" name="amount" placeholder="Amount" required></br>
+ Reciepent's AccountNo: <input type="text" name="accno" th:field="*{toacc}" placeholder="Account No." required> </br>
+ Amount:                <input type="text" name="amount" th:field="*{amount}" placeholder="Amount" required></br>
   
  <input type="submit" value="Transfer">  
   

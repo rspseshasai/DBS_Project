@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="createbankaccount" method="post" th:object="${bankAcc}">>
+<!-- Enter email id:
+<input type="text" name="email"> -->
+Select Type Of Account
+<select name="type">
+<option value="current">Current</option>
+<option value="savings">Savings</option>
+</select>
+<br>
+Enter Amount to be Deposited:
+<input type="text" name="balance">
+<br>
+<input type="submit" value="Submit">
+</form>
+</body>
+</html>

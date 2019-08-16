@@ -1,5 +1,8 @@
 package com.demo.spring;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,19 +12,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.demo.spring.entity.Accounts;
 import com.demo.spring.entity.Customers;
 import com.demo.spring.entity.LoginData;
+import com.demo.spring.entity.Transactions;
 
 @RestController
 public class AppController{
 	
 	private int currentId;
 	
+
+	
 	@Autowired
 	private LoginDataRepo ldr;
 	
 	@Autowired
+	private TransactionRepo tRepo;
+	
+	@Autowired
 	private CustomerRepo cRepo;
+	
+	@Autowired
+	private AccountsRepo aRepo;
+	
+	private Customers loggedIn = new Customers();
 	
 	@GetMapping(path = "/homepage")
 	public ModelAndView getHomePage(Model model) {
@@ -38,7 +53,11 @@ public class AppController{
 		//ldr.save(ld);
 		int isAuthentic = ldr.authenticate(ld.getId(), ld.getPassword(), ld.getType());	
 		if(isAuthentic!=0)
+		{
+			loggedIn = cRepo.getLoggedInCustomerObject(ld.getId());
+			//System.out.println("========="+loggedIn.getCid());
 			mv.setViewName("redirect:customerhomepage");
+		}
 		else
 			mv.setViewName("redirect:homepage");
 		return mv;
@@ -82,7 +101,12 @@ public class AppController{
 
 		cRepo.save(cs);
 		currentId=cs.getCid();
-		System.out.println(currentId);
+		//System.out.println(currentId);
+		Accounts accs = new Accounts();
+		accs.setBalance(5000);
+		accs.setCid(currentId);
+		accs.setType("Savings");
+		//aRepo.save(accs);
 		mv.setViewName("redirect:setpassword");
 		return mv;
 	}
@@ -106,13 +130,40 @@ public class AppController{
 	@GetMapping(path = "/transferfunds")
 	public ModelAndView getTransferFundsPage(Model model) {
 		ModelAndView mv = new ModelAndView();
+		Transactions t = new Transactions();
+		mv.addObject("transact", t);
 		mv.setViewName("transferfunds");
 		return mv;
 	}
 	@PostMapping(path = "/transferfunds")
-	public ModelAndView processTransferFunds(Model model) {
+	public ModelAndView processTransferFunds(@ModelAttribute("transact") Transactions trs) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:success");
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		LocalDateTime now = LocalDateTime.now();  
+		
+		double custBalance = aRepo.getCurrBalance(loggedIn.getCid());
+		
+		if(trs.getAmount() <= custBalance) {
+			System.out.println("if");
+
+			trs.setDate(dtf.format(now));
+			trs.setFromacc();
+			tRepo.save(trs);
+			aRepo.deductAmount(trs.getAmount(), loggedIn.getCid());
+			aRepo.addAmount(trs.getAmount(), trs.getToacc());
+			mv.setViewName("redirect:success");
+
+			
+		}
+		else
+		{
+			//System.out.println("else");
+			//out.println("sdaf");
+			mv.setViewName("transferFunds");
+		}
+		
+		
 		return mv;
 	}
 	
@@ -142,6 +193,25 @@ public class AppController{
 		mv.setViewName("redirect:success");
 		return mv;
 	}
+	
+	@GetMapping(path = "/createbankaccount")
+	public ModelAndView getBankAccPage(Model model) {
+		ModelAndView mv = new ModelAndView();
+//		int currId = loggedIn.getCid();
+//		model.addAttribute("cid", currId);
+
+		mv.setViewName("createbankaccount");
+		return mv;
+	}
+	@PostMapping(path = "/createbankaccount")
+	public ModelAndView processBankAccount(@ModelAttribute("bankAcc") Accounts accs) {
+		ModelAndView mv = new ModelAndView();
+		currentId=loggedIn.getCid();
+		accs.setCid(currentId);
+		aRepo.save(accs);
+		return mv;
+	}
+	
 	
 	
 	@GetMapping(path = "/success")

@@ -20,6 +20,17 @@ public class Transactions {
 	
 	private String date;
 
+	private double amount;
+
+	public Transactions(int tid, int fromacc, int toacc, String date, double amount) {
+		super();
+		this.tid = tid;
+		this.fromacc = fromacc;
+		this.toacc = toacc;
+		this.date = date;
+		this.amount = amount;
+	}
+
 	public int getTid() {
 		return tid;
 	}
@@ -52,13 +63,15 @@ public class Transactions {
 		this.date = date;
 	}
 
-	public Transactions(int tid, int fromacc, int toacc, String date) {
-		super();
-		this.tid = tid;
-		this.fromacc = fromacc;
-		this.toacc = toacc;
-		this.date = date;
+	public double getAmount() {
+		return amount;
 	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public Transactions() {	}
 	
 	
 	

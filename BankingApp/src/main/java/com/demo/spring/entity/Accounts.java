@@ -59,6 +59,8 @@ public class Accounts {
 		this.balance = balance;
 		this.type = type;
 	}
+
+	public Accounts() {}
 	
 	
 }
