@@ -47,12 +47,10 @@ public class AppController{
     System.out.println(ld.getPassword()+"pass");
     int cur_id = ldRepo.getUserId(ld.getUserName(),ld.getPassword());
     System.out.println(cur_id);
-//    ldRepo.
     if(ldRepo.getUserId(ld.getUserName(),ld.getPassword())==0)
         return ResponseEntity.status(404).build();
     if(ldRepo.existsById(cur_id))
     {
-        //System.out.println("Logged In");
     	System.out.println("in if");
         ld.setId(cur_id);
         ld.setUserType(ldRepo.getUserType(cur_id));
@@ -62,14 +60,24 @@ public class AppController{
     }
     else {
     	System.out.println("in else");
-//        ldRepo.save(ld);
     return ResponseEntity.status(404).build();    
     }
 }
 	@PostMapping(path = "/createaccount", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TempRegister> processCreateAccountPage(@RequestBody TempRegister tr) {
 		
-		System.out.println("---------------"+tr.getCustomerName());
+		//System.out.println("---------------"+tr.getCustomerName());
+		
+		Customers customer = new Customers();
+		LoginData logindata = new LoginData();
+		
+		customer.setAddress(tr.getAddress());
+		customer.setCustomerName(tr.getCustomerName());
+		customer.setEmail(tr.getEmail());
+		customer.setMobile(tr.getMobile());
+		
+		
+		
 		
 		return ResponseEntity.ok(tr);
 	}
