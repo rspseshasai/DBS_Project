@@ -1,12 +1,5 @@
 package com.demo.spring;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.spring.entity.Accounts;
 import com.demo.spring.entity.Customers;
 import com.demo.spring.entity.LoginData;
 import com.demo.spring.entity.TempRegister;
-import com.demo.spring.entity.Transactions;
 
 @RestController
 @CrossOrigin()
@@ -34,18 +25,7 @@ public class AppController{
 	private LoginDataRepo ldRepo;
 	
 	@Autowired
-	private TempRegisterRepo trRepo;
-	
-	@Autowired
 	private CustomerRepo cRepo;
-	
-	@Autowired
-	private AccountsRepo aRepo;
-	
-	@Autowired
-	private TransactionRepo tRepo;
-	
-	private int globalAccNo=100001;
 	
 	
 	@PostMapping(path = "/homepage", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
@@ -62,7 +42,7 @@ public class AppController{
 	}
 	
 	@PostMapping(path = "/customerlogin", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LoginData> processCustomerLogin(@RequestBody LoginData ld) {
+    public ResponseEntity<LoginData> processCustomerLoginPage(@RequestBody LoginData ld) {
     System.out.println(ld.getUserName());
     System.out.println(ld.getPassword()+"pass");
     int cur_id = ldRepo.getUserId(ld.getUserName(),ld.getPassword());
@@ -80,138 +60,32 @@ public class AppController{
     }
     else {
     	System.out.println("in else");
-        //ldRepo.save(ld);
-
-        return ResponseEntity.status(404).build();    
+<<<<<<< HEAD
+=======
+        ldRepo.save(ld);
+>>>>>>> origin/demo
+    return ResponseEntity.status(404).build();    
     }
 }
 	@PostMapping(path = "/createaccount", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TempRegister> processCreateAccount(@RequestBody TempRegister tr) {
+	public ResponseEntity<TempRegister> processCreateAccountPage(@RequestBody TempRegister tr) {
 		
 		//System.out.println("---------------"+tr.getCustomerName());
 		
-		trRepo.save(tr);
-		
 		Customers customer = new Customers();
 		LoginData logindata = new LoginData();
-		Accounts account = new Accounts();
 		
-		customer.setcustomerId(tr.getCustomerId());
 		customer.setAddress(tr.getAddress());
 		customer.setCustomerName(tr.getCustomerName());
 		customer.setEmail(tr.getEmail());
 		customer.setMobile(tr.getMobile());
 		
-		logindata.setId(tr.getCustomerId());
-		logindata.setUserName(tr.getUserName());
-		logindata.setPassword(tr.getPassword());
-		logindata.setUserType("Customer");
 		
-		account.setAccountType(tr.getAccountType());
-		account.setBalance(500);
-		account.setCustomerId(tr.getCustomerId());
-		account.setAccountNo("STSIND"+globalAccNo);
-		globalAccNo++;
 		
-		cRepo.save(customer);
-		ldRepo.save(logindata);
-		aRepo.save(account);
 		
 		return ResponseEntity.ok(tr);
 	}
 
-	
-	@PostMapping(path = "/transferfunds", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Transactions> processtransferFunds(@RequestBody Transactions t) {
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-	    Date date = new Date();  
-	    
-		t.setTransactionDate(formatter.format(date));
-		tRepo.save(t);
-		
-		aRepo.deductAmount(t.getFromAccount(), t.getTransactionAmount());
-		aRepo.addAmount(t.getToAccount(), t.getTransactionAmount());
-		
-		return ResponseEntity.ok(t);
-	}
-	
-	
-	@PostMapping(path = "/recenttransactions", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity< List <Transactions> > processRecentTransactions(@RequestBody Accounts account) {
-		ArrayList<Transactions> recentTransactions=new ArrayList<Transactions>();
-		
-		recentTransactions = tRepo.getRecentTransactions(account.getAccountNo());
-
-		
-//		 for (Transactions object : recentTransactions) {
-//	           
-//	           System.out.println(object.getFromAccount());
-//	         }
-
-		return ResponseEntity.ok(recentTransactions);
-	}
-	
-	@PostMapping(path = "/transactionsinrange", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity< List <Transactions> > processTransactionsInRange(@RequestBody ArrayList<String> range ) {
-		
-		ArrayList<Transactions> transactionsinrange=new ArrayList<Transactions>();
-		
-		transactionsinrange = tRepo.getTransactionsInRange(range.get(0), range.get(1), range.get(2));
-
-		
-		return ResponseEntity.ok(transactionsinrange);
-	}
-	
-	//======================================================
-	
-	@PostMapping(path = "/userlogin", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	   public ResponseEntity<LoginData> processUserLoginPage(@RequestBody LoginData ld) {
-	   System.out.println(ld.getUserName());
-	   System.out.println(ld.getPassword()+"pass");
-	   int cur_id = ldRepo.getUserId(ld.getUserName(),ld.getPassword());
-	   System.out.println(cur_id);
-	   if(ldRepo.getUserId(ld.getUserName(),ld.getPassword())==0)
-	       return ResponseEntity.status(404).build();
-	   if(ldRepo.existsById(cur_id))
-	   {
-	       //System.out.println("Logged In");
-	       if(!(ldRepo.getUserType(cur_id).equals("user")))
-	           return ResponseEntity.status(404).build();
-	       System.out.println("in if");
-	       ld.setId(cur_id);
-	       ld.setUserType(ldRepo.getUserType(cur_id));
-	       if(ld == null)
-	           return ResponseEntity.status(404).build();
-	       return ResponseEntity.ok(ld);
-	   }
-	   else {
-	       System.out.println("in else");
-	       //ldRepo.save(ld);
-	   return ResponseEntity.status(404).build();
-	   }
-	}
-	    
-	    @PostMapping(path = "/customerlogin/update/personal", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	   public ResponseEntity<Customers> updatePersonalDetails(@RequestBody Customers c) {
-//	    System.out.println(ld.getUserName());
-//	    System.out.println(ld.getPassword()+"pass");
-	       cRepo.save(c);
-	       return ResponseEntity.ok(c);
-	   }
-	    
-	    @PostMapping(path = "/customerlogin/update/login", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	   public ResponseEntity<LoginData> updateLoginDetails(@RequestBody LoginData ld) {
-//	    System.out.println(ld.getUserName());
-//	    System.out.println(ld.getPassword()+"pass");
-	       ldRepo.save(ld);
-	       return ResponseEntity.ok(ld);
-	   }
-	
-	//========================================================
-	
-	
-	
 //	@GetMapping(path = "/userlogin")
 //	public ModelAndView getUserLoginPage(Model model) {
 //		ModelAndView mv = new ModelAndView();
@@ -268,8 +142,12 @@ public class AppController{
 //		mv.setViewName("transferfunds");
 //		return mv;
 //	}
-	
-
+//	@PostMapping(path = "/transferfunds")
+//	public ModelAndView processTransferFunds(Model model) {
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("redirect:success");
+//		return mv;
+//	}
 //	
 //	@GetMapping(path = "/viewstatement")
 //	public ModelAndView getViewStatementPage(Model model) {

@@ -41,7 +41,6 @@ public class Customers {
 	}
 
 
-
 	public void setcustomerId(int customerId) {
 		this.customerId = customerId;
 	}
@@ -63,7 +62,6 @@ public class Customers {
 	public String getAddress() {
 		return address;
 	}
-
 
 
 	public void setAddress(String address) {

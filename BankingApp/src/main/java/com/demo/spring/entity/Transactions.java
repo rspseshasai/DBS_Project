@@ -14,9 +14,9 @@ public class Transactions {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int transactionId;
 	
-	private int fromAccount;
+	private String fromAccount;
 	
-	private int toAccount;
+	private String toAccount;
 	
 	private double transactionAmount;
 	
@@ -24,7 +24,10 @@ public class Transactions {
 
 	
 	
-	public Transactions(int transactionId, int fromAccount, int toAccount, double transactionAmount,
+	
+
+
+	public Transactions(int transactionId, String fromAccount, String toAccount, double transactionAmount,
 			String transactionDate) {
 		super();
 		this.transactionId = transactionId;
@@ -36,9 +39,15 @@ public class Transactions {
 
 
 
+
+
+
 	public int getTransactionId() {
 		return transactionId;
 	}
+
+
+
 
 
 
@@ -48,27 +57,42 @@ public class Transactions {
 
 
 
-	public int getFromAccount() {
+
+
+
+	public String getFromAccount() {
 		return fromAccount;
 	}
 
 
 
-	public void setFromAccount(int fromAccount) {
+
+
+
+	public void setFromAccount(String fromAccount) {
 		this.fromAccount = fromAccount;
 	}
 
 
 
-	public int getToAccount() {
+
+
+
+	public String getToAccount() {
 		return toAccount;
 	}
 
 
 
-	public void setToAccount(int toAccount) {
+
+
+
+	public void setToAccount(String toAccount) {
 		this.toAccount = toAccount;
 	}
+
+
+
 
 
 
@@ -78,9 +102,15 @@ public class Transactions {
 
 
 
+
+
+
 	public void setTransactionAmount(double transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
+
+
+
 
 
 
@@ -90,9 +120,15 @@ public class Transactions {
 
 
 
+
+
+
 	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
+
+
+
 
 
 
