@@ -62,7 +62,7 @@ public class AppController{
     }
     else {
     	System.out.println("in else");
-//        ldRepo.save(ld);
+        ldRepo.save(ld);
     return ResponseEntity.status(404).build();    
     }
 }

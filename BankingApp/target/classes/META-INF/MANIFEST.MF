@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: banking-app
 Implementation-Version: 1.0
-Built-By: rspse
+Built-By: Abride Solutions
 Implementation-Vendor-Id: com.demo
-Build-Jdk: 1.8.0_191
+Build-Jdk: 1.8.0_161
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/banking-app
 Created-By: Maven Integration for Eclipse
