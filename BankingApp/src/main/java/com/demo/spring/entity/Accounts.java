@@ -1,5 +1,6 @@
 package com.demo.spring.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,54 +12,74 @@ import javax.persistence.Table;
 public class Accounts {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int accno;
+	@Column(length=15)
+	private String accountNo;
 
-	private int cid;
+	private int customerId;
 	
 	private double balance;
 	
-	private String type;
+	private String accountType;
 
-	public int getAccno() {
-		return accno;
+	
+
+	public Accounts(String accountNo, int customerId, double balance, String accountType) {
+		super();
+		this.accountNo = accountNo;
+		this.customerId = customerId;
+		this.balance = balance;
+		this.accountType = accountType;
 	}
 
-	public void setAccno(int accno) {
-		this.accno = accno;
+
+
+	public String getAccountNo() {
+		return accountNo;
 	}
 
-	public int getCid() {
-		return cid;
+
+
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
 	}
 
-	public void setCid(int cid) {
-		this.cid = cid;
+
+
+	public int getCustomerId() {
+		return customerId;
 	}
+
+
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+
 
 	public double getBalance() {
 		return balance;
 	}
 
+
+
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
-	public String getType() {
-		return type;
+
+
+	public String getAccountType() {
+		return accountType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
 	}
 
-	public Accounts(int accno, int cid, double balance, String type) {
-		super();
-		this.accno = accno;
-		this.cid = cid;
-		this.balance = balance;
-		this.type = type;
-	}
+
 
 	public Accounts() {}
 	

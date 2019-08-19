@@ -12,64 +12,89 @@ public class Transactions {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int tid;
+	private int transactionId;
 	
-	private int fromacc;
+	private int fromAccount;
 	
-	private int toacc;
+	private int toAccount;
 	
-	private String date;
+	private double transactionAmount;
+	
+	private String transactionDate;
 
-	private double amount;
-
-	public Transactions(int tid, int fromacc, int toacc, String date, double amount) {
+	
+	
+	public Transactions(int transactionId, int fromAccount, int toAccount, double transactionAmount,
+			String transactionDate) {
 		super();
-		this.tid = tid;
-		this.fromacc = fromacc;
-		this.toacc = toacc;
-		this.date = date;
-		this.amount = amount;
+		this.transactionId = transactionId;
+		this.fromAccount = fromAccount;
+		this.toAccount = toAccount;
+		this.transactionAmount = transactionAmount;
+		this.transactionDate = transactionDate;
 	}
 
-	public int getTid() {
-		return tid;
+
+
+	public int getTransactionId() {
+		return transactionId;
 	}
 
-	public void setTid(int tid) {
-		this.tid = tid;
+
+
+	public void setTransactionId(int transactionId) {
+		this.transactionId = transactionId;
 	}
 
-	public int getFromacc() {
-		return fromacc;
+
+
+	public int getFromAccount() {
+		return fromAccount;
 	}
 
-	public void setFromacc(int fromacc) {
-		this.fromacc = fromacc;
+
+
+	public void setFromAccount(int fromAccount) {
+		this.fromAccount = fromAccount;
 	}
 
-	public int getToacc() {
-		return toacc;
+
+
+	public int getToAccount() {
+		return toAccount;
 	}
 
-	public void setToacc(int toacc) {
-		this.toacc = toacc;
+
+
+	public void setToAccount(int toAccount) {
+		this.toAccount = toAccount;
 	}
 
-	public String getDate() {
-		return date;
+
+
+	public double getTransactionAmount() {
+		return transactionAmount;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+
+
+	public void setTransactionAmount(double transactionAmount) {
+		this.transactionAmount = transactionAmount;
 	}
 
-	public double getAmount() {
-		return amount;
+
+
+	public String getTransactionDate() {
+		return transactionDate;
 	}
 
-	public void setAmount(double amount) {
-		this.amount = amount;
+
+
+	public void setTransactionDate(String transactionDate) {
+		this.transactionDate = transactionDate;
 	}
+
+
 
 	public Transactions() {	}
 	

@@ -13,42 +13,68 @@ public class Users {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int uid;
+	private int userId;
 
-	private String uname;
+	private String uName;
 
+	private String address;
 	
-	public Users(int uid, String uname) {
-		super();
-		this.uid = uid;
-		this.uname = uname;
-	}
-
-
-	public int getUid() {
-		return uid;
-	}
-
-
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
-
-
-	public String getUname() {
-		return uname;
-	}
-
-
-	public void setUname(String uname) {
-		this.uname = uname;
-	}
-
+	private String mobile;
+	
+	private String email;
 
 	public Users() {
+		
+	}
+	public int getUserId() {
+		return userId;
 	}
 
-	
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
+	public String getuName() {
+		return uName;
+	}
+
+	public void setuName(String uName) {
+		this.uName = uName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Users(int userId, String uName, String address, String mobile, String email) {
+		super();
+		this.userId = userId;
+		this.uName = uName;
+		this.address = address;
+		this.mobile = mobile;
+		this.email = email;
+	}
+	
+	
 	
 }

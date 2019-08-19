@@ -1,0 +1,30 @@
+<div class="container">
+  <form method="POST" #loginForm='ngForm' (ngSubmit)="onSubmit()">
+    <div class="form-group form-border">
+
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <h1>Customer Login</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <label>Username</label>
+          <input type="text" class="form-control" name="userName" [(ngModel)]="log.userName" #idField='ngModel'>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <label>Password</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="log.password">
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <button type="submit" class="btn btn-secondary">Login</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -12,47 +12,50 @@ import javax.persistence.Table;
 public class Customers {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int cid;
+	//@GeneratedValue(strategy=GenerationType.IDENTITY) //start from 10001
+	private int customerId;
 
-	private String cname;
+	private String customerName;
 	
 	private String address;
 	
 	private String mobile;
 	
-
-
-	public Customers(int cid, String cname, String address, String mobile) {
+	private String email;
+	
+	
+	
+	public Customers(int customerId, String customerName, String address, String mobile, String email) {
 		super();
-		this.cid = cid;
-		this.cname = cname;
+		this.customerId = customerId;
+		this.customerName = customerName;
 		this.address = address;
 		this.mobile = mobile;
+		this.email = email;
 	}
 
 
 
-	public int getCid() {
-		return cid;
+	public int getcustomerId() {
+		return customerId;
 	}
 
 
 
-	public void setCid(int cid) {
-		this.cid = cid;
+	public void setcustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 
 
-	public String getCname() {
-		return cname;
+	public String getCustomerName() {
+		return customerName;
 	}
 
 
 
-	public void setCname(String cname) {
-		this.cname = cname;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 
@@ -77,6 +80,18 @@ public class Customers {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 
