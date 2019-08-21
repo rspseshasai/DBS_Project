@@ -42,20 +42,27 @@
                 <input type="text"class="form-control" name="address" [(ngModel)]="temp.address" #idField='ngModel' required>
             </div>
     </div>
-            <div class="row">
+            <!-- <div class="row">
                     <div class="col-md-4 offset-md-4">
                         <label>Confirm Password</label>
                         <input type="password"class="form-control" name="confirmPassword">
                     </div>
-            </div>
+            </div> -->
+
             <div class="row">
-              <div class="col-md-4 offset-md-4">
-                <label>Account type</label>
-              </div>
-            </div>
-            <div>
+         <div class="col-md-4 offset-md-4">
+           <label>Account type</label>
+           <br />
+           <select name="AccountType" [(ngModel)]="temp.AccountType" #idField='ngModel' required>
+             <option selected>Current</option>
+             <option>Savings</option>
+           </select>
+         </div>
+       </div>
+       <div>
+       </div>
                 
-            </div>
+            
             <br />
             <div class="row">
                     <div class="col-md-4 offset-md-4">

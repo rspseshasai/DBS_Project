@@ -7,6 +7,8 @@ import { CustomerloginComponent } from './customerlogin/customerlogin.component'
 import { CustomerhomeComponent } from './customerhome/customerhome.component';
 import { ProfilesettingsComponent } from './profilesettings/profilesettings.component';
 import { UserhomeComponent } from './userhome/userhome.component';
+import { MyaccountsComponent } from './myaccounts/myaccounts.component';
+import { MytransactionsComponent } from './mytransactions/mytransactions.component';
 
 
 const routes: Routes = [
@@ -14,9 +16,12 @@ const routes: Routes = [
   {path:'register',component:RegisterComponent},
   {path:'userlogin',component:UserloginComponent},
   {path:'customerlogin',component:CustomerloginComponent},
-  {path:'customerhome',component:CustomerhomeComponent},
-  {path:'profilesettings',component:ProfilesettingsComponent},
-  {path:'userlogin/:username',component:UserhomeComponent}
+  {path:'customerhome/:id',component:CustomerhomeComponent},
+  {path:'customerhome/:id/profilesettings',component:ProfilesettingsComponent},
+  {path:'userlogin/:id',component:UserhomeComponent},
+  {path:'customerhome/:id/myaccounts',component:MyaccountsComponent},
+  {path:'mytransactions/:accountNo',component:MytransactionsComponent},
+  //{path:'mytransactions',component:MytransactionsComponent}
   // {path:''}
 ];
 

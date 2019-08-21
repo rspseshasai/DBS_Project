@@ -11,13 +11,13 @@ public interface LoginDataRepo  extends JpaRepository<LoginData, Integer>{
 //	int authenticate(String userName, String password, String userType);
 
 	
-	@Query("SELECT id FROM LoginData u where u.userName=?1")
+	@Query("SELECT u.id FROM LoginData u where u.userName=?1")
 	int getCurrId(String userName);
 
-	@Query("SELECT id FROM LoginData u where u.userName=?1 and u.password=?2")
+	@Query("SELECT u.id FROM LoginData u where u.userName=?1 and u.password=?2")
     int getUserId(String userName,String password);
 	
-	@Query("SELECT userType FROM LoginData u where u.id=?1")
+	@Query("SELECT u.userType FROM LoginData u where u.id=?1")
     String getUserType(int cur_id);
 	
 }

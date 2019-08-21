@@ -1,0 +1,12 @@
+<app-headerafter></app-headerafter>
+<div class="container">
+    <h1>My Accounts</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <table border='1'>
+                <tr><th>Account No</th><th>Balance</th><th>Type</th></tr>
+                <tr *ngFor='let accnts of accountsList'><td>{{accnts.accountNo}}</td><td>{{accnts.balance}}</td><td>{{accnts.accountType    }}</td></tr>
+            </table>
+        </div>
+    </div>
+</div>

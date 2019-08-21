@@ -1,5 +1,7 @@
 package com.demo.spring;
 
+import java.util.ArrayList;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,6 +32,10 @@ public interface AccountsRepo extends JpaRepository<Accounts, String> {
 	@Modifying
 	@Query("update Accounts u set u.balance = u.balance+?2 where u.accountNo=?1")
 	void addAmount(String toAccount, double transactionAmount);
+
+
+	@Query("select u from Accounts u where u.customerId=?1")
+	ArrayList<Accounts> getAccountsList(int accNo);
 	
 	
 

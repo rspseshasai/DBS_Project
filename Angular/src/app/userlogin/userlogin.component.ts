@@ -22,6 +22,7 @@ export class UserloginComponent implements OnInit {
     //console.log(this.log);
     this._logService.validateUser(this.user).subscribe( 
       (result) => {this.router.navigate(['/userlogin',this.user.userName])},
+     // (result) => this.router.navigate(['/some-url'], { queryParams:  filter, skipLocationChange: true}),
       (error)=>this.router.navigate(['/']), 
       );
   }

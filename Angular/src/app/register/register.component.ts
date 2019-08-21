@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   constructor(private _registerService:RegisterService, private router: Router) { }
 
   ngOnInit() {
-    this.temp = new TempRegister(null,'','','','','','','');
+    this.temp = new TempRegister(0,'','','','','','','');
   }
 
   onSubmit(){

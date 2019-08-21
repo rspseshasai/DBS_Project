@@ -1,22 +1,52 @@
 <app-headerafter></app-headerafter>
 <div class="container">
-    <div class="row">
+        <h1>Welcome {{sessionUserName}}</h1>
+        <form method="POST" (ngSubmit)="onSubmit()">
+                <div class="col-md-4 offset-md-4">
+
+                        <button type="submit" class="btn btn-secondary">Transactions</button>
+                </div>
+        </form>
+
+        <!-- <div class="row">
         <div class="col-md-4">
-            <a href="#">My Accounts</a>
+            <a href="customerhome/:id/myaccounts">My Accounts</a>
+
          
-        </div>
-        <div class="col-md-4">
-                <a href="#">My Transactions</a>        
+        </div> -->
+        <!-- <div class="col-md-4">
+                <a [routerLink]= " [ '/mytransactions']" [queryParams]= "{q:'asdf'} ">My Transactions</a>   
+
             </div>
-    </div>
-    <div class="row">
-            <div class="col-md-4">
-                    <a href="#">Statements</a>
-             
-            </div>
-            <div class="col-md-4">
-                    <a href="#">Transfer</a>     
+    </div> -->
+
+        <div class="row">
+                <div class="col-md-4">
+                        <a href="#">Statements</a>
+
+                </div>
+                <div class="col-md-4">
+                        <a href="#">Transfer</a>
                 </div>
         </div>
+        <form method="POST" (ngSubmit)="onSubmit()">
+                <button type="submit" class="btn btn-secondary">Load</button>
+        </form>
 </div>
 
+<div class="container">
+        <div class="row">
+                <table border='1'>
+                        <tr>
+                                <th>Account No</th>
+                                <th>Balance</th>
+                                <th>Type</th>
+                        </tr>
+                        <tr *ngFor='let accnts of accountsList' (click) = 'onClick(accnts)'>
+                                <td>{{accnts.accountNo}}</td>
+                                <td>{{accnts.balance}}</td>
+                                <td>{{accnts.accountType    }}</td>
+                        </tr>
+                </table>
+        </div>
+</div>

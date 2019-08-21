@@ -15,6 +15,9 @@ import { CustomerhomeComponent } from './customerhome/customerhome.component';
 import { HeaderafterComponent } from './headerafter/headerafter.component';
 import { ProfilesettingsComponent } from './profilesettings/profilesettings.component';
 import { UserhomeComponent } from './userhome/userhome.component';
+import { MytransactionsComponent } from './mytransactions/mytransactions.component';
+import { MyaccountsComponent } from './myaccounts/myaccounts.component';
+import { StorageServiceModule } from 'angular-webstorage-service';
 
 @NgModule({
   declarations: [
@@ -27,14 +30,17 @@ import { UserhomeComponent } from './userhome/userhome.component';
     CustomerhomeComponent,
     HeaderafterComponent,
     ProfilesettingsComponent,
-    UserhomeComponent
+    UserhomeComponent,
+    MytransactionsComponent,
+    MyaccountsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    StorageServiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]

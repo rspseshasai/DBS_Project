@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Login } from './login';
 import { Observable } from 'rxjs';
@@ -16,7 +16,8 @@ export class CustomerloginService {
     return this._http.get<Login>(this._loginUrl);
   }
 
-  validateUser(log){
-    return this._http.post<any>(this._loginUrl,log);
+  validateUser(log:Login){
+    //console.log("USer in Validate method : "+log.userName)
+    return this._http.post<Login>(this._loginUrl,log);
   }
 }
