@@ -74,6 +74,8 @@ public class AppController{
         return ResponseEntity.status(404).build();
     if(ldRepo.existsById(cur_id))
     {
+    	if(!(ldRepo.getUserType(cur_id).equals("Customer")))
+	           return ResponseEntity.status(404).build();
     	//System.out.println("in if");
         ld.setId(cur_id);
         ld.setUserType(ldRepo.getUserType(cur_id));
@@ -212,7 +214,7 @@ public class AppController{
 	   if(ldRepo.existsById(cur_id))
 	   {
 	       //System.out.println("Logged In");
-	       if(!(ldRepo.getUserType(cur_id).equals("user")))
+	       if(!(ldRepo.getUserType(cur_id).equals("User")))
 	           return ResponseEntity.status(404).build();
 	       System.out.println("in if");
 	       ld.setId(cur_id);
@@ -246,23 +248,27 @@ public class AppController{
 	
 	    
 	    @GetMapping(path = "/userlogin/requests", produces = {
-	            MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	            MediaType.APPLICATION_JSON_VALUE })
 	    public ResponseEntity<List<TempRegister>> pendingRequests() {
 	        
 	        List<TempRegister> ltr=trRepo.findAll();
-	        
+	        System.out.println(ltr.get(0));
 	        return ResponseEntity.ok(ltr);
 	    }
 	    
 	    @PostMapping(path = "/userlogin/requests/accept", produces = {
 	            MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	    public ResponseEntity<String> acceptPendingRequests(@RequestBody TempRegister tr) {
-	        
+	    public ResponseEntity<TempRegister> acceptPendingRequests(@RequestBody TempRegister tr) {
+	    	System.out.println("hi there");
+	        System.out.println(tr.getCustomerName());
+	        System.out.println(tr.getEmail());
+	    	int customerId = trRepo.getCurrCustomerId(tr.getCustomerName(), tr.getEmail());
+	    	System.out.println(customerId+"hjsgfas");
 	    	Customers customer = new Customers();
 			LoginData logindata = new LoginData();
 			
-			
-			customer.setcustomerId(tr.getCustomerId());
+//			customer.setcustomerId(tr.getCustomerId());
+			customer.setcustomerId(customerId);
 			customer.setAddress(tr.getAddress());
 			customer.setCustomerName(tr.getCustomerName());
 			customer.setEmail(tr.getEmail());
@@ -270,7 +276,7 @@ public class AppController{
 			
 			
 			
-			logindata.setId(tr.getCustomerId());
+			logindata.setId(customerId);
 			logindata.setUserName(tr.getUserName());
 			logindata.setPassword(tr.getPassword());
 			logindata.setUserType("Customer");
@@ -291,7 +297,7 @@ public class AppController{
 			
 			account.setAccountType("savings");
 			account.setBalance(5000);
-			account.setCustomerId(tr.getCustomerId());
+			account.setCustomerId(customerId);
 			//account.setAccountNo("STSIND"+globalAccNo);
 			
 			
@@ -299,14 +305,14 @@ public class AppController{
 			ldRepo.save(logindata);
 			aRepo.save(account);
 	        trRepo.delete(tr);
-	        return ResponseEntity.ok("Accepted");
+	        return ResponseEntity.ok(tr);
 	    }
 	    
 	    @PostMapping(path = "/userlogin/requests/reject", produces = {
 	            MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	    public ResponseEntity<String> rejectPendingRequests(@RequestBody TempRegister tr) {
+	    public ResponseEntity<TempRegister> rejectPendingRequests(@RequestBody TempRegister tr) {
 	        trRepo.delete(tr);
-	        return ResponseEntity.ok("Rejected");
+	        return ResponseEntity.ok(tr);
 	    }
 	//========================================================
 	
