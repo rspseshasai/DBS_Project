@@ -18,6 +18,8 @@ import { UserhomeComponent } from './userhome/userhome.component';
 import { MytransactionsComponent } from './mytransactions/mytransactions.component';
 import { MyaccountsComponent } from './myaccounts/myaccounts.component';
 import { StorageServiceModule } from 'angular-webstorage-service';
+import { TransferfundsComponent } from './transferfunds/transferfunds.component';
+import { CreateaccountComponent } from './createaccount/createaccount.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { StorageServiceModule } from 'angular-webstorage-service';
     ProfilesettingsComponent,
     UserhomeComponent,
     MytransactionsComponent,
-    MyaccountsComponent
+    MyaccountsComponent,
+    TransferfundsComponent,
+    CreateaccountComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,45 @@
+<app-headerbefore></app-headerbefore>
+
+<div class="container">
+  <form method="POST" #trnaferForm='ngForm' (ngSubmit)="onSubmit()">
+    <div class="form-group form-border">
+
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <h1>Enter Details to transfer funds</h1>
+        </div>
+      </div>
+
+      
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <label>From Account</label>
+          <input type="text" class="form-control" name="fromAccount" [(ngModel)]="transfer.fromAccount" #idField='ngModel'>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <label>To Account</label>
+          <input type="text" class="form-control" name="toAccount" [(ngModel)]="transfer.toAccount">
+        </div>
+      </div>
+
+      <div class="row">
+            <div class="col-md-4 offset-md-4">
+              <label>Amount</label>
+              <input type="text" class="form-control" name="transactionAmount" [(ngModel)]="transfer.transactionAmount">
+            </div>
+          </div>
+
+
+      <br />
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <button type="submit" class="btn btn-secondary">Transfer</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

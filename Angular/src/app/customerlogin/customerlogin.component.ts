@@ -54,9 +54,8 @@ export class CustomerloginComponent implements OnInit {
         //this.sessionData['UserName'] ;
         
         //this.router.navigate(['/customerhome', this.log.id],  { queryParams: { sessionData } } )},
-
         this.router.navigate(['/customerhome', this.log.id],  { queryParams: { sessionUserName, sessionId } } )},
-      (error)=>this.router.navigate(['/']), 
-      );
+          (error)=>this.router.navigate(['/'])
+          );
   }
 }

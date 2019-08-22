@@ -9,6 +9,9 @@ import { ProfilesettingsComponent } from './profilesettings/profilesettings.comp
 import { UserhomeComponent } from './userhome/userhome.component';
 import { MyaccountsComponent } from './myaccounts/myaccounts.component';
 import { MytransactionsComponent } from './mytransactions/mytransactions.component';
+import { TransferfundsComponent } from './transferfunds/transferfunds.component';
+import { CreateaccountComponent } from './createaccount/createaccount.component';
+
 
 
 const routes: Routes = [
@@ -21,6 +24,8 @@ const routes: Routes = [
   {path:'userlogin/:id',component:UserhomeComponent},
   {path:'customerhome/:id/myaccounts',component:MyaccountsComponent},
   {path:'mytransactions/:accountNo',component:MytransactionsComponent},
+  {path:'transferfunds',component:TransferfundsComponent},
+  {path:'createaccount', component:CreateaccountComponent}
   //{path:'mytransactions',component:MytransactionsComponent}
   // {path:''}
 ];

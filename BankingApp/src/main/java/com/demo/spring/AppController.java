@@ -94,11 +94,26 @@ public class AppController{
     }
 }
 	@PostMapping(path = "/createaccount", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TempRegister> processCreateAccount(@RequestBody TempRegister tr) {
+	public ResponseEntity<Accounts> processCreateAccount(@RequestBody Accounts accs) {
+	
+		System.out.println("in acrete acc");
 		
-		//System.out.println("---------------"+tr.getCustomerName());
+		int globalAccNo = acRepo.getAccountsCount();
+		  
+		  //System.out.println("ddd "+globalAccNo);
+		 
+		  accs.setAccountNo("STSIND"+globalAccNo);
+		  
+		  //AccountsCount ac = new AccountsCount(); 
+		  
+		  globalAccNo++;
+		  
+		  acRepo.updateAccountsCount(globalAccNo);
 		
-		trRepo.save(tr);
+		  accs.setBalance(5000);
+		
+		  aRepo.save(accs);
+		//trRepo.save(tr);
 		
 		/*
 		 * Customers customer = new Customers(); LoginData logindata = new LoginData();
@@ -135,12 +150,15 @@ public class AppController{
 		 * cRepo.save(customer); ldRepo.save(logindata); aRepo.save(account);
 		 */
 		
-		return ResponseEntity.ok(tr);
+		return ResponseEntity.ok(accs);
 	}
 
 	
 	@PostMapping(path = "/transferfunds", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Transactions> processtransferFunds(@RequestBody Transactions t) {
+		
+		
+		System.out.println("In Spring Transfer Funds");
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
 	    Date date = new Date();  
@@ -230,22 +248,24 @@ public class AppController{
 	   }
 	}
 	    
-	    @PostMapping(path = "/customerlogin/update/personal", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	   public ResponseEntity<Customers> updatePersonalDetails(@RequestBody Customers c) {
-//	    System.out.println(ld.getUserName());
-//	    System.out.println(ld.getPassword()+"pass");
-	       cRepo.save(c);
-	       return ResponseEntity.ok(c);
-	   }
-	    
-	    @PostMapping(path = "/customerlogin/update/login", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	   public ResponseEntity<LoginData> updateLoginDetails(@RequestBody LoginData ld) {
-//	    System.out.println(ld.getUserName());
-//	    System.out.println(ld.getPassword()+"pass");
-	       ldRepo.save(ld);
-	       return ResponseEntity.ok(ld);
-	   }
-	
+	@PostMapping(path = "/customerlogin/update/personal", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Customers> updatePersonalDetails(@RequestBody Customers c) {
+
+        cRepo.save(c);
+        return ResponseEntity.ok(c);
+    }
+     
+     @PostMapping(path = "/customerlogin/update/login", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LoginData> updateLoginDetails(@RequestBody LoginData ld) {
+         
+     
+     System.out.println(ld.getId());
+     String type=ldRepo.getUserType(ld.getId());
+     ld.setUserType(type);
+    
+     ldRepo.save(ld);
+        return ResponseEntity.ok(ld);
+    }
 	    
 	    @GetMapping(path = "/userlogin/requests", produces = {
 	            MediaType.APPLICATION_JSON_VALUE })

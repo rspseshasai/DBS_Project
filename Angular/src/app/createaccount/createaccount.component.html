@@ -1,0 +1,34 @@
+<app-headerafter></app-headerafter>
+
+<div class="container">
+        <form method="POST" #loginForm='ngForm' (ngSubmit)="onSubmit()">
+          <div class="form-group form-border">
+      
+            <div class="row">
+              <div class="col-md-4 offset-md-4">
+                <h1>Create account</h1>
+              </div>
+            </div>
+      
+            
+            <div class="row">
+              <div class="col-md-4 offset-md-4">
+                <label>AccountType</label>
+                <input type="text" class="form-control" name="accountType" [(ngModel)]="accs.accountType" #idField='ngModel'>
+              </div>
+            </div>
+      
+      
+      
+            <br />
+            <div class="row">
+              <div class="col-md-4 offset-md-4">
+                <button type="submit" class="btn btn-secondary">Create</button>
+              </div>
+            </div>
+          </div>
+
+          
+        </form>
+      </div>
+      

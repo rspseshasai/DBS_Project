@@ -60,6 +60,10 @@ export class CustomerhomeComponent implements OnInit {
     this.router.navigate(['/mytransactions', accnts.accountNo] );
   }
 
+  transfer(){
+    this.router.navigate(['/transferfunds']);
+  }
+
 }
 
 
