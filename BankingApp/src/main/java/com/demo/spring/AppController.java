@@ -64,6 +64,14 @@ public class AppController{
 	return ResponseEntity.ok(null);
 	}
 	
+	
+	@PostMapping(path = "/createtempaccount", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TempRegister> processCreateTempAccount(@RequestBody TempRegister tr) {
+		trRepo.save(tr);
+		return ResponseEntity.ok(tr);
+	}
+	
+	
 	@PostMapping(path = "/customerlogin", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginData> processCustomerLogin(@RequestBody LoginData ld) {
   System.out.println(ld.getUserName());
