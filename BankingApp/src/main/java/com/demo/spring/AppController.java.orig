@@ -60,10 +60,8 @@ public class AppController{
     }
     else {
     	System.out.println("in else");
-<<<<<<< HEAD
-=======
+
         ldRepo.save(ld);
->>>>>>> origin/demo
     return ResponseEntity.status(404).build();    
     }
 }
@@ -85,6 +83,10 @@ public class AppController{
 		
 		return ResponseEntity.ok(tr);
 	}
+	
+	
+	
+
 
 //	@GetMapping(path = "/userlogin")
 //	public ModelAndView getUserLoginPage(Model model) {

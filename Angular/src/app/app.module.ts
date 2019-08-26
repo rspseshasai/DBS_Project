@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuard } from './auth.guard';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -46,7 +47,7 @@ import { CreateaccountComponent } from './createaccount/createaccount.component'
     HttpClientModule,
     StorageServiceModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

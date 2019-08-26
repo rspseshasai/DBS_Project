@@ -11,6 +11,7 @@ import { MyaccountsComponent } from './myaccounts/myaccounts.component';
 import { MytransactionsComponent } from './mytransactions/mytransactions.component';
 import { TransferfundsComponent } from './transferfunds/transferfunds.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
+import { AuthGuard } from './auth.guard';
 
 
 
@@ -19,13 +20,13 @@ const routes: Routes = [
   {path:'register',component:RegisterComponent},
   {path:'userlogin',component:UserloginComponent},
   {path:'customerlogin',component:CustomerloginComponent},
-  {path:'customerhome/:id',component:CustomerhomeComponent},
-  {path:'customerhome/:id/profilesettings',component:ProfilesettingsComponent},
+  {path:'customerhome/:id',component:CustomerhomeComponent,canActivate: [AuthGuard]},
+  {path:'customerhome/:id/profilesettings',component:ProfilesettingsComponent,canActivate: [AuthGuard]},
   {path:'userlogin/:id',component:UserhomeComponent},
-  {path:'customerhome/:id/myaccounts',component:MyaccountsComponent},
-  {path:'mytransactions/:accountNo',component:MytransactionsComponent},
-  {path:'transferfunds',component:TransferfundsComponent},
-  {path:'createaccount', component:CreateaccountComponent}
+  {path:'customerhome/:id/myaccounts',component:MyaccountsComponent,canActivate: [AuthGuard]},
+  {path:'mytransactions/:accountNo',component:MytransactionsComponent,canActivate: [AuthGuard]},
+  {path:'transferfunds',component:TransferfundsComponent,canActivate: [AuthGuard]},
+  {path:'createaccount', component:CreateaccountComponent,canActivate: [AuthGuard]}
   //{path:'mytransactions',component:MytransactionsComponent}
   // {path:''}
 ];

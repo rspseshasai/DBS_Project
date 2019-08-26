@@ -4,19 +4,33 @@ import { UpdateService } from '../update.service';
 import { Router } from '@angular/router';
 import { Customers } from '../Customers';
 import { SESSION_STORAGE, WebStorageService } from 'angular-webstorage-service';
+import { GetcustomerService } from '../getcustomer.service';
 @Component({
   selector: 'app-profilesettings',
   templateUrl: './profilesettings.component.html',
   styleUrls: ['./profilesettings.component.css']
 })
 export class ProfilesettingsComponent implements OnInit {
+  
   public ld : Login;
   public cust : Customers;
-  constructor(private _updateService:UpdateService, private router: Router,
-     @Inject(SESSION_STORAGE) private storage: WebStorageService) { }
+
+  constructor(
+    private _updateService:UpdateService, 
+    private _getCustObj: GetcustomerService, 
+    private router: Router,
+     @Inject(SESSION_STORAGE) private storage: WebStorageService
+     ) { }
+
+
   ngOnInit() {
+   
     this.ld = new Login(0,'','','');
-    this.cust = new Customers(0,'','','','');
+    this._getCustObj.getCustomerObj(this.storage.get('Id')).subscribe(data=>this.cust=data);
+
+    console.log(this.cust.customerName+"  in ps com");
+
+    this.cust = new Customers(this.cust.customerId, this.cust.customerName, this.cust.address, this.cust.mobile, this.cust.email);
   }
   onUpdatePro(ld1:Login){
     //console.log(ld1);

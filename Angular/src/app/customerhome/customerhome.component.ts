@@ -5,6 +5,7 @@ import { Login } from '../login';
 import { WebStorageService, SESSION_STORAGE } from 'angular-webstorage-service';
 import { AccountsService } from '../accounts.service';
 import { Accounts } from '../Accounts';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-customerhome',
@@ -20,34 +21,46 @@ export class CustomerhomeComponent implements OnInit {
 
   private customerId;
   public accountsList: Accounts[];
-
+  public isLoggedIn:string;
   public sessionData: any=[];
-
+  public id : string;
   constructor(
     private _accountService: AccountsService,
   private currentRoute:ActivatedRoute,
-    private _customerService:CustomerloginService, private router: Router) { }
+    private _customerService:CustomerloginService, private router: Router,public authService:AuthService) { }
 
   ngOnInit() {
     
+    console.log(sessionStorage.getItem('isLoggedIn')+" in oninit b");
+    this.isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if(this.isLoggedIn == "true")
+    {
+      console.log(sessionStorage.getItem('isLoggedIn')+" in oninit a");
+        this.currentRoute.queryParams.subscribe(           
 
-    this.currentRoute.queryParams.subscribe(           
+          sessionId => {this.customerId = sessionId['sessionId']; 
+          console.log("sessionId = "+sessionId['sessionId']);
+        }
 
-      sessionId => {this.customerId = sessionId['sessionId']; 
-      console.log("sessionId = "+sessionId['sessionId']);
-     
-    });
+        );
 
-    this.currentRoute.queryParams.subscribe(  
-      sessionUserName => {
-        
-        sessionUserName['sessionUserName']; 
-        console.log("sessionUserName = "+sessionUserName['sessionUserName']);
-      });
+        this.currentRoute.queryParams.subscribe(  
+          sessionUserName => {
+            
+            sessionUserName['sessionUserName']; 
+            console.log("sessionUserName = "+sessionUserName['sessionUserName']);
+          });
 
 
-     this._accountService.getAccountsList(this.customerId).subscribe(data=>this.accountsList=data);
-     let param1;
+        this._accountService.getAccountsList(this.customerId).subscribe(data=>this.accountsList=data);
+        let param1;
+
+        this.id = localStorage.getItem('token');
+    }
+    else
+    {
+      this.router.navigate(['/customerlogin'] );
+    }
 
   }
 
@@ -62,6 +75,16 @@ export class CustomerhomeComponent implements OnInit {
 
   transfer(){
     this.router.navigate(['/transferfunds']);
+  }
+
+  logout(): void {
+    console.log("Logout");
+    console.log(sessionStorage.getItem('isLoggedIn')+" in logout b");
+    sessionStorage.removeItem('isLoggedIn');
+    console.log(sessionStorage.getItem('isLoggedIn')+" in logout a");
+    sessionStorage.clear();
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }

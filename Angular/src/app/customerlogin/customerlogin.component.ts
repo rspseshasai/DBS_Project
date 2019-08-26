@@ -3,6 +3,7 @@ import { CustomerloginService } from '../customerlogin.service';
 import { Login } from '../login';
 import { Router } from '@angular/router';
 import {SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -12,22 +13,30 @@ import {SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
 })
 export class CustomerloginComponent implements OnInit {
   public log:Login;
+  public   returnUrl: string;
   
-  constructor( @Inject(SESSION_STORAGE) private storage: WebStorageService, private _logService: CustomerloginService, private router: Router) { }
+  constructor( @Inject(SESSION_STORAGE) private storage: WebStorageService, private _logService: CustomerloginService, private router: Router,private authService : AuthService) { }
 
   
 
   ngOnInit() {
     this._logService.getLogin().subscribe(data=>console.log(data));
     this.log = new Login(0,"","","");
+    this.returnUrl = '/customerhome/:id';
+    this.authService.logout();
   }
 
   onSubmit(){
     //console.log(this.log);
     this._logService.validateUser(this.log).subscribe( 
       (result) => { 
+
         this.log=result;
         console.log(this.log);
+        
+        sessionStorage.setItem('isLoggedIn', "true");
+        sessionStorage.setItem('token', this.log.userName);
+        //sessionStorage.setItem('loggedInCustObj', )
        // let sessionData;
         let idv;
         //let sessionData: any[];
@@ -49,13 +58,9 @@ export class CustomerloginComponent implements OnInit {
 
         let sessionId = sessionData[1].Id;
 
-        //console.log(sessionPassword);
         
-        //this.sessionData['UserName'] ;
-        
-        //this.router.navigate(['/customerhome', this.log.id],  { queryParams: { sessionData } } )},
         this.router.navigate(['/customerhome', this.log.id],  { queryParams: { sessionUserName, sessionId } } )},
-          (error)=>this.router.navigate(['/'])
+          (error)=>this.router.navigate(['/customerlogin'])
           );
   }
 }

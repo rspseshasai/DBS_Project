@@ -3,11 +3,12 @@
 <br />
 <div class="container">
     <h3>Update Profile Data</h3>
+    <span>{{cust.customerName}}</span>
     <form method='POST' #updateProForm='ngForm' (ngSubmit)="onUpdatePro1(cust)">
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4 offset-md-4">
-                        <label>Name</label><input type="text" class="form-control" name="customerName" [(ngModel)]="cust.customerName">
+                        <label>Name</label><input type="text" placeholder="{{cust.customerName}}"  class="form-control" name="customerName" [(ngModel)]="cust.customerName">
                 </div>
             </div>
         </div>

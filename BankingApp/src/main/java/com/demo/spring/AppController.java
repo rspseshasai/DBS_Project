@@ -195,6 +195,17 @@ public class AppController{
 	}
 	
 	
+	@GetMapping(path = "/getCustomerObj/{custId}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Customers> processGetCustObj(@PathVariable("custId") int custId) {
+		
+		Customers custObj = new Customers();
+		custObj = cRepo.getCustomerObj(custId);
+		
+		
+		return ResponseEntity.ok(custObj);
+	}
+	
+	
 	@GetMapping(path = "/recenttransactions/{accNo}", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity< List <Transactions> > processRecentTransactions(@PathVariable("accNo") String accNo) {
 		ArrayList<Transactions> recentTransactions=new ArrayList<Transactions>();
