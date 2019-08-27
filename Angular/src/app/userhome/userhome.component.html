@@ -1,4 +1,29 @@
 <app-headerafter></app-headerafter>
+
+<form method="POST" (ngSubmit)="updateCustomers()">
+    <div class="col-md-4 offset-md-4">
+            <button type="submit" class="btn btn-secondary">Modify Customer's details</button>
+    </div>
+</form>
+
+<form method="POST" (ngSubmit)="createNewAccount()">
+    <div class="col-md-4 offset-md-4">
+            <button type="submit" class="btn btn-secondary">Create New Account</button>
+    </div>
+</form>
+
+<form method="POST" (ngSubmit)="createNewBankAccount()">
+    <div class="col-md-4 offset-md-4">
+            <button type="submit" class="btn btn-secondary">Create New Bank Account</button>
+    </div>
+</form>
+
+<form method="POST" (ngSubmit)="deleteAccount()">
+    <div class="col-md-4 offset-md-4">
+            <button type="submit" class="btn btn-secondary">Remove Bank Account</button>
+    </div>
+</form>
+
 <div class="conatiner">
     <div class="row">
         <div class="col-md-8 offset-md-2">

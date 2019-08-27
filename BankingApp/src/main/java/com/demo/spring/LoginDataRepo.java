@@ -19,5 +19,12 @@ public interface LoginDataRepo  extends JpaRepository<LoginData, Integer>{
 	
 	@Query("SELECT u.userType FROM LoginData u where u.id=?1")
     String getUserType(int cur_id);
+
+	
+	@Query("select u from LoginData u where u.id=?1")
+	LoginData getLoginDataObj(int custId);
+
+	@Query("select count(u) from LoginData u where u.userName=?1")
+	int doesExists(String userName);
 	
 }

@@ -12,13 +12,23 @@ import { MytransactionsComponent } from './mytransactions/mytransactions.compone
 import { TransferfundsComponent } from './transferfunds/transferfunds.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
 import { AuthGuard } from './auth.guard';
+import { GetcustidComponent } from './getcustid/getcustid.component';
+import { UpdatebyuserComponent } from './updatebyuser/updatebyuser.component';
+import { CreateaccountuserComponent } from './createaccountuser/createaccountuser.component';
+import { RemoveaccountComponent } from './removeaccount/removeaccount.component';
 
 
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
+  {path:'getCustId',component:GetcustidComponent},
   {path:'register',component:RegisterComponent},
   {path:'userlogin',component:UserloginComponent},
+
+
+  {path:'removeaccount',component:RemoveaccountComponent},
+  {path:'userhome/updateCustDetails/:id',component:UpdatebyuserComponent},
+  {path:'createaccountbyuser', component:CreateaccountuserComponent,canActivate: [AuthGuard]},
   {path:'customerlogin',component:CustomerloginComponent},
   {path:'customerhome/:id',component:CustomerhomeComponent,canActivate: [AuthGuard]},
   {path:'customerhome/:id/profilesettings',component:ProfilesettingsComponent,canActivate: [AuthGuard]},

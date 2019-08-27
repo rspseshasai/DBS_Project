@@ -20,10 +20,20 @@ export class UserloginComponent implements OnInit {
 
   onSubmit(){
     //console.log(this.log);
+
     this._logService.validateUser(this.user).subscribe( 
-      (result) => {this.router.navigate(['/userlogin',this.user.userName])},
+
+
+
+      (result) => {
+        
+        sessionStorage.setItem('isLoggedInUser', "true");
+        
+        this.router.navigate(['/userlogin',this.user.userName])},
      // (result) => this.router.navigate(['/some-url'], { queryParams:  filter, skipLocationChange: true}),
-      (error)=>this.router.navigate(['/']), 
+      (error)=>{
+        alert("Invalid Credientials..Enter again");
+        this.router.navigate(['/'])}, 
       );
   }
 

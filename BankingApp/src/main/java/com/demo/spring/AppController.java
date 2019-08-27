@@ -57,7 +57,6 @@ public class AppController{
 	System.out.println("in hp ");
 	if(ldRepo.existsById(cur_id))
 	{
-		//System.out.println("Logged In");
 		return ResponseEntity.ok(ld);
 	}
 		
@@ -74,8 +73,13 @@ public class AppController{
 	
 	@PostMapping(path = "/customerlogin", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginData> processCustomerLogin(@RequestBody LoginData ld) {
-  System.out.println(ld.getUserName());
-  System.out.println(ld.getPassword());
+  //System.out.println(ld.getUserName());
+  //System.out.println(ld.getPassword());
+	int isExists = ldRepo.doesExists(ld.getUserName());
+	if(isExists == 0)
+		return ResponseEntity.status(404).build();  
+	
+	
     int cur_id = ldRepo.getUserId(ld.getUserName(),ld.getPassword());
     //System.out.println(cur_id);
     if(ldRepo.getUserId(ld.getUserName(),ld.getPassword())==0)
@@ -90,14 +94,12 @@ public class AppController{
         if(ld == null)
         	return ResponseEntity.status(404).build();
         
-        System.out.println("hii   "+ld.getId());
+       // System.out.println("hii   "+ld.getId());
         
         return ResponseEntity.ok(ld);
     }
     else {
-    	System.out.println("in else");
-        //ldRepo.save(ld);
-
+    	//System.out.println("in else");
         return ResponseEntity.status(404).build();    
     }
 }
@@ -105,60 +107,24 @@ public class AppController{
 	public ResponseEntity<Accounts> processCreateAccount(@RequestBody Accounts accs) {
 	
 		System.out.println("in acrete acc");
+
+		int isExists = aRepo.doesExists(accs.getCustomerId());
 		
-		int globalAccNo = acRepo.getAccountsCount();
-		  
-		  //System.out.println("ddd "+globalAccNo);
-		 
-		  accs.setAccountNo("STSIND"+globalAccNo);
-		  
-		  //AccountsCount ac = new AccountsCount(); 
-		  
-		  globalAccNo++;
-		  
-		  acRepo.updateAccountsCount(globalAccNo);
-		
-		  accs.setBalance(5000);
-		
-		  aRepo.save(accs);
-		//trRepo.save(tr);
-		
-		/*
-		 * Customers customer = new Customers(); LoginData logindata = new LoginData();
-		 * 
-		 * 
-		 * customer.setcustomerId(tr.getCustomerId());
-		 * customer.setAddress(tr.getAddress());
-		 * customer.setCustomerName(tr.getCustomerName());
-		 * customer.setEmail(tr.getEmail()); customer.setMobile(tr.getMobile());
-		 * 
-		 * 
-		 * 
-		 * logindata.setId(tr.getCustomerId()); logindata.setUserName(tr.getUserName());
-		 * logindata.setPassword(tr.getPassword()); logindata.setUserType("Customer");
-		 * 
-		 * Accounts account = new Accounts();
-		 * 
-		 * int globalAccNo = acRepo.getAccountsCount();
-		 * 
-		 * System.out.println("ddd "+globalAccNo);
-		 * 
-		 * account.setAccountNo("STSIND"+globalAccNo);
-		 * 
-		 * AccountsCount ac = new AccountsCount(); globalAccNo++;
-		 * 
-		 * acRepo.updateAccountsCount(globalAccNo);
-		 * 
-		 * 
-		 * account.setAccountType("savings"); account.setBalance(5000);
-		 * account.setCustomerId(tr.getCustomerId());
-		 * //account.setAccountNo("STSIND"+globalAccNo);
-		 * 
-		 * 
-		 * cRepo.save(customer); ldRepo.save(logindata); aRepo.save(account);
-		 */
-		
-		return ResponseEntity.ok(accs);
+		if(isExists != 0)
+		{
+		 int globalAccNo = acRepo.getAccountsCount();		 
+		 accs.setAccountNo("STSIND"+globalAccNo);
+		 globalAccNo++;
+		 acRepo.updateAccountsCount(globalAccNo);
+		 accs.setBalance(5000);
+		 aRepo.save(accs);
+		 return ResponseEntity.ok(accs);
+		}
+		else
+		{
+			System.out.println("No cust");
+			 return ResponseEntity.status(404).build();  
+		}
 	}
 
 	
@@ -166,18 +132,28 @@ public class AppController{
 	public ResponseEntity<Transactions> processtransferFunds(@RequestBody Transactions t) {
 		
 		
-		System.out.println("In Spring Transfer Funds");
+		//System.out.println("In Spring Transfer Funds");
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-	    Date date = new Date();  
-	    
-		t.setTransactionDate(formatter.format(date));
-		tRepo.save(t);
 		
-		aRepo.deductAmount(t.getFromAccount(), t.getTransactionAmount());
-		aRepo.addAmount(t.getToAccount(), t.getTransactionAmount());
+		int isExists = aRepo.isToAccExists(t.getToAccount());
 		
-		return ResponseEntity.ok(t);
+		if(isExists != 0) {
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		    Date date = new Date();  
+		    
+			t.setTransactionDate(formatter.format(date));
+			tRepo.save(t);
+			
+			aRepo.deductAmount(t.getFromAccount(), t.getTransactionAmount());
+			aRepo.addAmount(t.getToAccount(), t.getTransactionAmount());
+			
+			return ResponseEntity.ok(t);
+		}
+		else
+		{
+			 return ResponseEntity.status(404).build();  
+
+		}
 	}
 	
 	
@@ -199,12 +175,43 @@ public class AppController{
 	public ResponseEntity<Customers> processGetCustObj(@PathVariable("custId") int custId) {
 		
 		Customers custObj = new Customers();
-		custObj = cRepo.getCustomerObj(custId);
-		
-		
-		return ResponseEntity.ok(custObj);
+		if(cRepo.existsById(custId))
+		{
+			custObj = cRepo.getCustomerObj(custId);
+			return ResponseEntity.ok(custObj);
+		}
+		else
+		{
+			return ResponseEntity.status(404).build();
+		}
+			
 	}
 	
+	@GetMapping(path = "/getLoginObj/{custId}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<LoginData> processGetLoginDataObj(@PathVariable("custId") int custId) {
+		
+		LoginData ld = new LoginData();
+		ld = ldRepo.getLoginDataObj(custId);
+		
+		System.out.println(ld);
+		
+		return ResponseEntity.ok(ld);
+	}
+	
+	@GetMapping(path = "/removeaccount/{accNo}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<String> processRemoveAccount(@PathVariable("accNo") String accNo) {
+		//System.out.println("In remove");
+		
+		if(aRepo.existsById(accNo))
+		{
+			aRepo.removeAccount(accNo);
+			return ResponseEntity.ok("ok");
+		}
+		else
+		{
+			return ResponseEntity.status(404).build();
+		}
+	}
 	
 	@GetMapping(path = "/recenttransactions/{accNo}", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity< List <Transactions> > processRecentTransactions(@PathVariable("accNo") String accNo) {
@@ -355,94 +362,6 @@ public class AppController{
 	    }
 	//========================================================
 	
-	
-	
-//	@GetMapping(path = "/userlogin")
-//	public ModelAndView getUserLoginPage(Model model) {
-//		ModelAndView mv = new ModelAndView();
-//		LoginData ld=new LoginData();
-//		model.addAttribute("authenticate", ld);
-//		mv.setViewName("userlogin");
-//		return mv;
-//	}
-//	@PostMapping(path = "/userlogin")
-//	public ModelAndView processUserLogin(@ModelAttribute("authenticate") LoginData ld) {
-//		ModelAndView mv = new ModelAndView();
-//		ld.setType("User");
-//		int isAuthentic = ldRepo.authenticate(ld.getId(), ld.getPassword(), ld.getType());	
-//		if(isAuthentic!=0)
-//			mv.setViewName("redirect:userhomepage");
-//		else
-//			mv.setViewName("redirect:userlogin");
-//		return mv;
-//	}
-//	
-//	
-//	
-//	@GetMapping(path = "/createaccount")
-//	public ModelAndView getCreateAccountPage(Model model) {
-//		ModelAndView mv = new ModelAndView();
-//		Customers cs = new Customers();
-//		model.addAttribute("create", cs);
-//		mv.setViewName("createaccount");
-//		return mv;
-//	}
-	
-	
-	
-//	
-//
-//	@GetMapping(path = "/customerhomepage")
-//	public ModelAndView getCustomerHomePage(Model model) {
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("customerhomepage");
-//		return mv;
-//	}
-//	
-//	@GetMapping(path = "/userhomepage")
-//	public ModelAndView getUserHomePage(Model model) {
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("userhomepage");
-//		return mv;
-//	}
-//	
-//	
-//	@GetMapping(path = "/transferfunds")
-//	public ModelAndView getTransferFundsPage(Model model) {
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("transferfunds");
-//		return mv;
-//	}
-	
-
-//	
-//	@GetMapping(path = "/viewstatement")
-//	public ModelAndView getViewStatementPage(Model model) {
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("viewstatement");
-//		return mv;
-//	}
-//	
-//	@GetMapping(path = "/setpassword")
-//	public ModelAndView getSetPasswordPage(Model model) {
-//		ModelAndView mv = new ModelAndView();
-//		LoginData ld= new LoginData();
-//		model.addAttribute("setpass", ld);
-//		mv.setViewName("setpassword");
-//		return mv;
-//	}
-//	
-//	@PostMapping(path = "/setpassword")
-//	public ModelAndView processSetPassword(@ModelAttribute("setpass") LoginData ld) {
-//		System.out.println("post setpass");
-//		ModelAndView mv = new ModelAndView();
-//		ld.setId(currentId);
-//		ld.setType("Customer");
-//		ldRepo.save(ld);
-//		mv.setViewName("redirect:success");
-//		return mv;
-//	}
-//	
 	
 	@GetMapping(path = "/success")
 	public ModelAndView getSuccessPage(Model model) {

@@ -21,6 +21,10 @@ import { MyaccountsComponent } from './myaccounts/myaccounts.component';
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { TransferfundsComponent } from './transferfunds/transferfunds.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
+import { GetcustidComponent } from './getcustid/getcustid.component';
+import { UpdatebyuserComponent } from './updatebyuser/updatebyuser.component';
+import { CreateaccountuserComponent } from './createaccountuser/createaccountuser.component';
+import { RemoveaccountComponent } from './removeaccount/removeaccount.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,11 @@ import { CreateaccountComponent } from './createaccount/createaccount.component'
     MytransactionsComponent,
     MyaccountsComponent,
     TransferfundsComponent,
-    CreateaccountComponent
+    CreateaccountComponent,
+    GetcustidComponent,
+    UpdatebyuserComponent,
+    CreateaccountuserComponent,
+    RemoveaccountComponent
   ],
   imports: [
     BrowserModule,

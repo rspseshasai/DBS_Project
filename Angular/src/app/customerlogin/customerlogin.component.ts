@@ -36,6 +36,9 @@ export class CustomerloginComponent implements OnInit {
         
         sessionStorage.setItem('isLoggedIn', "true");
         sessionStorage.setItem('token', this.log.userName);
+
+
+
         //sessionStorage.setItem('loggedInCustObj', )
        // let sessionData;
         let idv;
@@ -60,7 +63,9 @@ export class CustomerloginComponent implements OnInit {
 
         
         this.router.navigate(['/customerhome', this.log.id],  { queryParams: { sessionUserName, sessionId } } )},
-          (error)=>this.router.navigate(['/customerlogin'])
+          (error)=>{
+            alert("Invalid Credientials....Enter again !");
+            this.router.navigate(['/customerlogin'])}
           );
   }
 }

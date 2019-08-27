@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, ViewChild } from '@angular/core';
 import { CustomerloginService } from '../customerlogin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Login } from '../login';
@@ -6,6 +6,7 @@ import { WebStorageService, SESSION_STORAGE } from 'angular-webstorage-service';
 import { AccountsService } from '../accounts.service';
 import { Accounts } from '../Accounts';
 import { AuthService } from '../auth.service';
+import { AlertService } from '../alert/alert.service';
 
 @Component({
   selector: 'app-customerhome',
@@ -23,23 +24,34 @@ export class CustomerhomeComponent implements OnInit {
   public accountsList: Accounts[];
   public isLoggedIn:string;
   public sessionData: any=[];
+
+  private bal:number;
   public id : string;
   constructor(
     private _accountService: AccountsService,
   private currentRoute:ActivatedRoute,
-    private _customerService:CustomerloginService, private router: Router,public authService:AuthService) { }
+    private _customerService:CustomerloginService, 
+    private router: Router,
+    public authService:AuthService,
+    private _alertSerive: AlertService
+    ) { }
 
   ngOnInit() {
+
+
     
     console.log(sessionStorage.getItem('isLoggedIn')+" in oninit b");
-    this.isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    
+   this.isLoggedIn = sessionStorage.getItem('isLoggedIn');
     if(this.isLoggedIn == "true")
     {
-      console.log(sessionStorage.getItem('isLoggedIn')+" in oninit a");
+        
+    
+        console.log(sessionStorage.getItem('isLoggedIn')+" in oninit a");
         this.currentRoute.queryParams.subscribe(           
 
           sessionId => {this.customerId = sessionId['sessionId']; 
-          console.log("sessionId = "+sessionId['sessionId']);
+          //console.log("sessionId = "+sessionId['sessionId']);
         }
 
         );
@@ -53,7 +65,29 @@ export class CustomerhomeComponent implements OnInit {
 
 
         this._accountService.getAccountsList(this.customerId).subscribe(data=>this.accountsList=data);
-        let param1;
+
+        //--------------------------------------------------------------------------MinBal
+          
+          // this.accountsList.forEach(accountObj => {
+                        
+          //   console.log("in for");
+
+          //   this.bal=accountObj.balance;
+
+          //   if(this.bal< 5000){
+          //     console.log("< 5000");
+          //     this._alertSerive.create(
+          //       "Title", 
+          //       "danger", 
+          //       5000,
+          //       "success Alter" 
+          
+          //       );
+          //   }
+          // });
+
+
+        //---------------------------------------------------------------------------------
 
         this.id = localStorage.getItem('token');
     }
@@ -81,12 +115,30 @@ export class CustomerhomeComponent implements OnInit {
     console.log("Logout");
     console.log(sessionStorage.getItem('isLoggedIn')+" in logout b");
     sessionStorage.removeItem('isLoggedIn');
+
+
+    //-----------------------------------------------
+    sessionStorage.removeItem('isLoggedInUser');
+    //--------------------------------------------------------
+    
     console.log(sessionStorage.getItem('isLoggedIn')+" in logout a");
     sessionStorage.clear();
     this.authService.logout();
     this.router.navigate(['/login']);
   }
 
+  triggerAlert(){
+                
+      console.log("< 5000");
+      this._alertSerive.create(
+        "Title", 
+        "danger", 
+        5000,
+        "success Alter" 
+  
+        );
+    
+  }
 }
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from '../login';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserloginService } from '../userlogin.service';
 import { UserhomeService } from '../userhome.service';
 import { TempRegister } from '../temp-register';
@@ -17,15 +17,22 @@ export class UserhomeComponent implements OnInit {
   public temp:TempRegister[];
   public temp1:TempRegister;
   constructor(private currentRoute:ActivatedRoute,
+    private router: Router,
     private _userService:UserloginService,
     private _userHomeService : UserhomeService
     ) { }
 
   ngOnInit() {
-    this._userService.getLogin().subscribe(data=>this.log=data);
-    // console.log(this.log.userName, this.log.password);
-    this._userHomeService.getTransactionsList().subscribe(data=>this.temp=data);
-    this.temp1 = new TempRegister(0,"","","","","","","");
+    if(sessionStorage.getItem('isLoggedInUser')=="true")
+    {
+      this._userService.getLogin().subscribe(data=>this.log=data);
+      // console.log(this.log.userName, this.log.password);
+      this._userHomeService.getTransactionsList().subscribe(data=>this.temp=data);
+      this.temp1 = new TempRegister(0,"","","","","","","");
+    }
+    else{
+      this.router.navigate(['/userlogin'] );
+    }
   }
   onAccept(tem:TempRegister){
     console.log("in on submit "+tem.customerName);
@@ -40,4 +47,19 @@ export class UserhomeComponent implements OnInit {
    // this._userHomeService.rejectList(this.temp1).subscribe(data=>this.temp1=data);
   }
 
+  updateCustomers(){
+    this.router.navigate(['/getCustId']);
+  }
+
+  createNewAccount(){
+    this.router.navigate(['/register']);
+  }
+
+  createNewBankAccount(){
+    this.router.navigate(['/createaccountbyuser']);
+  }
+
+  deleteAccount(){
+    this.router.navigate(['/removeaccount']);
+  }
 }

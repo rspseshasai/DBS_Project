@@ -17,6 +17,7 @@ export class ProfilesettingsComponent implements OnInit {
 
   constructor(
     private _updateService:UpdateService, 
+    private _getLoginDataObj:GetcustomerService,
     private _getCustObj: GetcustomerService, 
     private router: Router,
      @Inject(SESSION_STORAGE) private storage: WebStorageService
@@ -24,13 +25,21 @@ export class ProfilesettingsComponent implements OnInit {
 
 
   ngOnInit() {
-   
+
+    if(sessionStorage.getItem('isLoggedIn') == "true")
+   {
+    //console.log(sessionStorage.getItem('isLoggedIn'));
     this.ld = new Login(0,'','','');
     this._getCustObj.getCustomerObj(this.storage.get('Id')).subscribe(data=>this.cust=data);
 
-    console.log(this.cust.customerName+"  in ps com");
+    //console.log(this.cust+"  in ps com");
 
-    this.cust = new Customers(this.cust.customerId, this.cust.customerName, this.cust.address, this.cust.mobile, this.cust.email);
+    this._getLoginDataObj.getLoginDataObj(this.storage.get('Id')).subscribe(data=>this.ld=data);
+   }
+   else{
+    this.router.navigate(['/customerlogin'] );
+   }
+    //this.cust = new Customers(this.cust.customerId, this.cust.customerName, this.cust.address, this.cust.mobile, this.cust.email);
   }
   onUpdatePro(ld1:Login){
     //console.log(ld1);

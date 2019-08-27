@@ -17,17 +17,6 @@ public interface AccountsRepo extends JpaRepository<Accounts, String> {
 	@Query("update Accounts u set u.balance = u.balance-?2 where u.accountNo=?1")
 	void deductAmount(String fromAccount, double transactionAmount);
 
-	
-//	@Query("select u.balance from Accounts u where u.cid=?1")
-//	double getCurrBalance(int cid);
-//
-//	@Transactional
-//	@Modifying
-//	@Query("update Accounts u set u.balance = u.balance-?1 where u.cid=?2")
-//	void deductAmount(double amount, int cid);
-//	
-//	
-	
 	@Transactional
 	@Modifying
 	@Query("update Accounts u set u.balance = u.balance+?2 where u.accountNo=?1")
@@ -36,6 +25,17 @@ public interface AccountsRepo extends JpaRepository<Accounts, String> {
 
 	@Query("select u from Accounts u where u.customerId=?1")
 	ArrayList<Accounts> getAccountsList(int accNo);
+
+	@Transactional
+	@Modifying
+	@Query("delete from Accounts u where u.accountNo=?1")
+	void removeAccount(String accNo);
+
+	@Query("select count(u) from Accounts u where u.customerId=?1")
+	int doesExists(int customerId);
+
+	@Query("select count(u) from Accounts u where u.accountNo=?1")
+	int isToAccExists(String toAccount);
 	
 	
 
