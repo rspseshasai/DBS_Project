@@ -16,4 +16,6 @@ public interface TransactionRepo extends JpaRepository<Transactions, Integer> {
 	@Query(value = "SELECT u FROM Transactions u WHERE transactionDate >=?2 AND transactionDate <= ?3 AND (fromAccount=?1 OR toAccount=?1)")
 	ArrayList<Transactions> getTransactionsInRange(String string, String string2, String string3);
 
+	@Query(value = "select sum(transactionAmount) from Transactions where transactionDate like concat(DATE_FORMAT(curdate(),'%d/%m/%Y'),'%') and fromAccount=?1")
+    int getSumOfTodaysTransactions(String string1 );
 }

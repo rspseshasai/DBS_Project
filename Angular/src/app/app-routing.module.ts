@@ -16,6 +16,7 @@ import { GetcustidComponent } from './getcustid/getcustid.component';
 import { UpdatebyuserComponent } from './updatebyuser/updatebyuser.component';
 import { CreateaccountuserComponent } from './createaccountuser/createaccountuser.component';
 import { RemoveaccountComponent } from './removeaccount/removeaccount.component';
+import { ReportedtransComponent } from './reportedtrans/reportedtrans.component';
 
 
 
@@ -24,6 +25,8 @@ const routes: Routes = [
   {path:'getCustId',component:GetcustidComponent},
   {path:'register',component:RegisterComponent},
   {path:'userlogin',component:UserloginComponent},
+
+  {path:'reportedtrans',component:ReportedtransComponent},
 
 
   {path:'removeaccount',component:RemoveaccountComponent},
@@ -35,7 +38,7 @@ const routes: Routes = [
   {path:'userlogin/:id',component:UserhomeComponent},
   {path:'customerhome/:id/myaccounts',component:MyaccountsComponent,canActivate: [AuthGuard]},
   {path:'mytransactions/:accountNo',component:MytransactionsComponent,canActivate: [AuthGuard]},
-  {path:'transferfunds',component:TransferfundsComponent,canActivate: [AuthGuard]},
+  {path:'transferfunds/:customerId',component:TransferfundsComponent,canActivate: [AuthGuard]},
   {path:'createaccount', component:CreateaccountComponent,canActivate: [AuthGuard]}
   //{path:'mytransactions',component:MytransactionsComponent}
   // {path:''}

@@ -1,17 +1,34 @@
 <app-headerafter></app-headerafter>
 <p>mytransactions works!</p>
-<div class="container">
-        <h1>My Transactions</h1>    
-<table border='1'>
-    <tr ><th>Transaction Id</th> <th>Amount</th> <th>From Account</th> <th>To Account</th> <th>Date </th> </tr>
-    <tr *ngFor='let trans of translist'>
-        <td >{{trans.transactionId}}</td> 
-        <td>{{trans.transactionAmount}}</td>
-        <td>{{trans.fromAccount}}</td>
-        <td>{{trans.toAccount}}</td>
-        <td>{{trans.transactionDate}}</td>
+<div class="limiter">
+        <div class="container">
+          <div class="row">
+            <div class="wrap-table100">
+              <div class="table100">
+                <table border='1'>
+    <tr class="table100-head" ><th class="column1">Transaction Id</th> 
+        <th class="column1">Amount</th> 
+        <th class="column2">From Account</th> 
+        <th class="column3">To Account</th> 
+        <th class="column4">Date </th>
+     </tr>
+    <tr *ngFor='let trans of translist | paginate : { itemsPerPage:10, currentPage:p }'>
+        <td class="column1">{{trans.transactionId}}</td> 
+        <td class="column2">{{trans.transactionAmount}}</td>
+        <td class="column3">{{trans.fromAccount}}</td>
+        <td class="column4">{{trans.toAccount}}</td>
+        <td class="column5">{{trans.transactionDate}}</td>
     </tr>
     
     <tr></tr>
+    <!-- <div class="card-footer pb-0 pt-3">
+        <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+    </div> -->
+    
 </table>
+<pagination-controls (pageChange)="p=$event"></pagination-controls>
+</div>
+</div>
+</div>
+
 </div>

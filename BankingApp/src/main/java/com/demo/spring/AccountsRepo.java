@@ -38,5 +38,8 @@ public interface AccountsRepo extends JpaRepository<Accounts, String> {
 	int isToAccExists(String toAccount);
 	
 	
+	@Query(value="select u.accountNo from Accounts u where u.customerId=?1")
+    ArrayList<Accounts> getAccountNum(int custId);
+	
 
 }

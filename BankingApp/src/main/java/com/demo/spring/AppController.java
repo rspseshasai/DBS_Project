@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.validation.BindingResult;
@@ -37,6 +38,13 @@ public class AppController{
 	
 	@Autowired
 	private TempRegisterRepo trRepo;
+	
+//	@Autowired
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+
+	@Autowired
+	private TransactionsReportsRepo reportRepo;
 	
 	@Autowired
 	private CustomerRepo cRepo;
@@ -79,10 +87,23 @@ public class AppController{
 	if(isExists == 0)
 		return ResponseEntity.status(404).build();  
 	
+	final String secretKey = "ssshhhhhhhhhhh!!!!";
 	
-    int cur_id = ldRepo.getUserId(ld.getUserName(),ld.getPassword());
+	EncryptClass enc= new EncryptClass();
+	
+    String encodedPassword = enc.encrypt(ld.getPassword(), secretKey);
+
+	System.out.println("generated passwrod hashed is in login: "+encodedPassword);
+	
+    int cur_id = ldRepo.getUserId(ld.getUserName(),encodedPassword);
     //System.out.println(cur_id);
-    if(ldRepo.getUserId(ld.getUserName(),ld.getPassword())==0)
+    
+
+	
+			
+	//ld.setPassword(encodedPassword);
+    
+    if(ldRepo.getUserId(ld.getUserName(),encodedPassword)==0)
         return ResponseEntity.status(404).build();
     if(ldRepo.existsById(cur_id))
     {
@@ -146,7 +167,24 @@ public class AppController{
 			
 			aRepo.deductAmount(t.getFromAccount(), t.getTransactionAmount());
 			aRepo.addAmount(t.getToAccount(), t.getTransactionAmount());
+			//----------------------------------------------------------------
 			
+			int sum = tRepo.getSumOfTodaysTransactions(t.getFromAccount());
+	        TransactionReports rep=new TransactionReports();
+	        rep.setFromAccount(t.getFromAccount());
+	        rep.setToAccount(t.getToAccount());
+	        rep.setTransactionAmount(t.getTransactionAmount());
+	        rep.setTransactionDate(t.getTransactionDate());
+	        rep.setTransactionId(t.getTransactionId());
+	        if(sum>=5000)
+	        {
+	            rep.setFlag(true);
+	            reportRepo.save(rep);
+	        }
+	        else
+	            rep.setFlag(false);
+			
+			//----------------------------------------------------------------
 			return ResponseEntity.ok(t);
 		}
 		else
@@ -170,6 +208,27 @@ public class AppController{
 		return ResponseEntity.ok(accountsList);
 	}
 	
+	//-----------------------------------------------------------------=
+	
+	@GetMapping(path="/userlogin/reportedtrans",produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ArrayList<TransactionReports> reportedtransaction() {
+    ArrayList<TransactionReports> li=new ArrayList<>();
+    li=(ArrayList<TransactionReports>) reportRepo.findAll();
+    return li;
+	}
+	
+	@GetMapping(path = "/getAccountNum/{custId}", produces= {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Accounts>> getAccounts(@PathVariable("custId") int custId) {
+        
+        ArrayList<Accounts> accNums=new ArrayList<Accounts>();
+        
+        accNums = aRepo.getAccountNum(custId);
+        
+        return ResponseEntity.ok(accNums);
+    }
+	
+	//---------------------------------------------------------------------=
 	
 	@GetMapping(path = "/getCustomerObj/{custId}", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Customers> processGetCustObj(@PathVariable("custId") int custId) {
@@ -320,11 +379,18 @@ public class AppController{
 			customer.setEmail(tr.getEmail());
 			customer.setMobile(tr.getMobile());
 			
-			
+			final String secretKey = "ssshhhhhhhhhhh!!!!";
 			
 			logindata.setId(customerId);
 			logindata.setUserName(tr.getUserName());
-			logindata.setPassword(tr.getPassword());
+			EncryptClass enc= new EncryptClass();
+			String encodedPassword = enc.encrypt(tr.getPassword(), secretKey);
+
+			//System.out.println("generated passwrod hashed is : "+encodedPassword);
+			
+					
+			logindata.setPassword(encodedPassword);
+			
 			logindata.setUserType("Customer");
 			
 			Accounts account = new Accounts();
@@ -341,7 +407,8 @@ public class AppController{
 			acRepo.updateAccountsCount(globalAccNo);
 			
 			
-			account.setAccountType("savings");
+			account.setAccountType(tr.getAccountType());
+			
 			account.setBalance(5000);
 			account.setCustomerId(customerId);
 			//account.setAccountNo("STSIND"+globalAccNo);

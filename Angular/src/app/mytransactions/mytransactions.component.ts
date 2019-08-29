@@ -16,7 +16,7 @@ export class MytransactionsComponent implements OnInit {
   [x: string]: any;
   public translist:Transactions[];
   public log:Login;
-
+  p:number=1; 
 
 
   constructor(private _transactionservice: TranasactionsService, 

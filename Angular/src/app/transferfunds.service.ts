@@ -10,9 +10,15 @@ import { Transactions } from './Transactions';
 export class TransferfundsService {
   
   private _loginUrl="http://localhost:8080/transferfunds";
+  private _accountsUrl="http://localhost:8080/getAccountNum/";
   constructor(private _http: HttpClient) { }
 
   transferAmount(transfer:Transactions):Observable<Transactions>{
     return this._http.post<Transactions>(this._loginUrl, transfer);
   }
+
+  getAccounts(accNo : number):Observable<any> {
+    return this._http.get<any>(this._accountsUrl+accNo);
+  }
+ 
 }

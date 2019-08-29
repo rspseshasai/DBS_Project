@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransferFunds } from '../transfer-funds';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TransferfundsService } from '../transferfunds.service';
 import { Transactions } from '../Transactions';
 
@@ -12,12 +12,27 @@ import { Transactions } from '../Transactions';
 export class TransferfundsComponent implements OnInit {
 
   public transfer:Transactions;
-  constructor( private router: Router,  private _transferservice: TransferfundsService) { }
+  public accs: string[];
+  constructor( 
+    private router: Router,
+    private currentRoute:ActivatedRoute,
+    private _transferservice: TransferfundsService
+    ) { }
 
   ngOnInit() {
     //console.log(sessionStorage.getItem('isLoggedIn') + "isloged in in transfer comp");
     if(sessionStorage.getItem('isLoggedIn')=="true" )
+    {
       this.transfer = new Transactions(0,"","",0,"");
+
+      //-----------------------------------=
+      let custId:string = this.currentRoute.snapshot.paramMap.get('customerId');
+      let cusId : number = parseInt(custId);
+      console.log(custId);
+      this._transferservice.getAccounts(cusId).subscribe(data => this.accs= data);
+      //-----------------------------------=
+
+    }
       else{
         this.router.navigate(['/customerlogin'] );
       }

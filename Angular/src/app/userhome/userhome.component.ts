@@ -62,4 +62,7 @@ export class UserhomeComponent implements OnInit {
   deleteAccount(){
     this.router.navigate(['/removeaccount']);
   }
+  getReportedTransactions() {
+    this.router.navigate(['/reportedtrans']);
+  }
 }

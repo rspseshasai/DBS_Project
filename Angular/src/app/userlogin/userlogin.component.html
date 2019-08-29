@@ -1,33 +1,45 @@
 <app-headerbefore></app-headerbefore>
+<div class="body-content">
 <div class="container">
-    <form method="POST" #loginForm='ngForm' (ngSubmit)="onSubmit()">
-        
-          <div class="form-group form-border">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+  
+    <div class="form-group form-border">
+
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <h2>User Login</h2>
+        </div>
+      </div>  
+      <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+          
+          <!-- Login Form -->
+          <form method="POST" #loginForm='ngForm' (ngSubmit)="onSubmit()" class="formClass">
+            <div class="row">
+              <div class="col-md-12">
+                  <input type="text" class="fadeIn second" name="userName" [(ngModel)]="user.userName" #idField='ngModel' placeholder="login"> 
+                </div>
+            </div>
+              
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" id="password" class="fadeIn third" name="password" [(ngModel)]="user.password"  placeholder="password">
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-secondary">Login</button>
+            </form>
       
-            <div class="row">
-              <div class="col-md-4 offset-md-4">
-                <h1>User Login</h1>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 offset-md-4">
-                <label>Username</label>
-                <input type="text" class="form-control" name="userName" [(ngModel)]="user.userName" #idField='ngModel'>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 offset-md-4">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password" [(ngModel)]="user.password">
-              </div>
-            </div>
-            <br />
-            <div class="row">
-              <div class="col-md-4 offset-md-4">
-                <button type="submit" class="btn btn-secondary">Login</button>
-              </div>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
+
       
+      
+    </div>
+  
+</div>
+</div>
+</div>
+<app-footer></app-footer>
+</div>

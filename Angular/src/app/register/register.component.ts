@@ -15,6 +15,8 @@ export class RegisterComponent implements OnInit {
 
   public type:string;
   public temp:TempRegister;
+  public accType:string[] = ["Current", "Savings"];
+
   constructor(private route: ActivatedRoute, private _registerService:RegisterService, private router: Router) { }
 
   ngOnInit() {
@@ -29,13 +31,17 @@ export class RegisterComponent implements OnInit {
   onSubmit(){
     console.log(this.temp);
     let response = this._registerService.saveData(this.temp).subscribe(
-      data=>console.log(data), error => console.log(error));
-
-      if(this.type == "user"){
-        console.log("in if");
-        this.router.navigate(['/userlogin', 1136]);
+      data=>{console.log(data);
+        console.log(this.type+" 35");
+        if(this.type == "user"){
+          console.log("in if");
+          this.router.navigate(['/userlogin', 1136]);
+        }
+        else
+          this.router.navigate(['/customerlogin']);
       }
-      else
-        this.router.navigate(['/customerlogin']);
+      , error => console.log(error));
+
+      
   }
 }

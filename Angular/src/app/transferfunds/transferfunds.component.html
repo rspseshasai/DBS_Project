@@ -1,4 +1,4 @@
-<app-headerbefore></app-headerbefore>
+<app-headerafter></app-headerafter>
 
 <div class="container">
   <form method="POST" #trnaferForm='ngForm' (ngSubmit)="onSubmit()">
@@ -14,7 +14,10 @@
       <div class="row">
         <div class="col-md-4 offset-md-4">
           <label>From Account</label>
-          <input type="text" class="form-control" name="fromAccount" [(ngModel)]="transfer.fromAccount" #idField='ngModel'>
+          <select name="accs" class="custom-select" [(ngModel)]="transfer.fromAccount">
+              <option selected='select'>Select from account number</option>
+              <option *ngFor="let item of accs">{{item}}</option>
+          </select>
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { Login } from '../login';
 import { Router } from '@angular/router';
 import {SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
 import { AuthService } from '../auth.service';
+import { PopupService } from '../popupss.service';
 
 
 @Component({
@@ -15,7 +16,9 @@ export class CustomerloginComponent implements OnInit {
   public log:Login;
   public   returnUrl: string;
   
-  constructor( @Inject(SESSION_STORAGE) private storage: WebStorageService, private _logService: CustomerloginService, private router: Router,private authService : AuthService) { }
+  constructor( @Inject(SESSION_STORAGE) private storage: WebStorageService,
+  private _popupService:PopupService,
+  private _logService: CustomerloginService, private router: Router,private authService : AuthService) { }
 
   
 
@@ -60,11 +63,17 @@ export class CustomerloginComponent implements OnInit {
         let sessionUserName = sessionData[0].UserName;
 
         let sessionId = sessionData[1].Id;
-
+        console.log(sessionData[0].UserName);
         
         this.router.navigate(['/customerhome', this.log.id],  { queryParams: { sessionUserName, sessionId } } )},
           (error)=>{
-            alert("Invalid Credientials....Enter again !");
+            //console.log("in error");
+            //alert("Invalid Credientials....Enter again !");
+
+            //
+            this._popupService.confirm('Invalid Credentials', 'Enter Again').then((confirmed) => console.log('User confirmed:', confirmed))
+   .catch(() => console.log('User dismissed the dialog '));
+
             this.router.navigate(['/customerlogin'])}
           );
   }

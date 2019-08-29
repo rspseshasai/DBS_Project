@@ -4,6 +4,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './auth.guard';
+import { BnNgIdleService } from 'bn-ng-idle';
+import { JwPaginationComponent } from 'jw-angular-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -26,6 +31,14 @@ import { UpdatebyuserComponent } from './updatebyuser/updatebyuser.component';
 import { CreateaccountuserComponent } from './createaccountuser/createaccountuser.component';
 import { RemoveaccountComponent } from './removeaccount/removeaccount.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReportedtransComponent } from './reportedtrans/reportedtrans.component';
+import { PopupssComponent } from './popuss/popupss.component';
+import { FooterComponent } from './footer/footer.component';
+import { PopupComponent } from './popup/popup.component';
+import { UserheaderComponent } from './userheader/userheader.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +58,14 @@ import { RemoveaccountComponent } from './removeaccount/removeaccount.component'
     GetcustidComponent,
     UpdatebyuserComponent,
     CreateaccountuserComponent,
-    RemoveaccountComponent
+    RemoveaccountComponent,
+    PopupComponent,
+    PopupssComponent,
+    ReportedtransComponent,
+    FooterComponent,
+    UserheaderComponent,
+    JwPaginationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -53,9 +73,12 @@ import { RemoveaccountComponent } from './removeaccount/removeaccount.component'
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    StorageServiceModule
+    StorageServiceModule,
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[PopupComponent]
 })
 export class AppModule { }

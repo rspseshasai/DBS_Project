@@ -6,7 +6,6 @@ import { WebStorageService, SESSION_STORAGE } from 'angular-webstorage-service';
 import { AccountsService } from '../accounts.service';
 import { Accounts } from '../Accounts';
 import { AuthService } from '../auth.service';
-import { AlertService } from '../alert/alert.service';
 
 @Component({
   selector: 'app-customerhome',
@@ -33,7 +32,6 @@ export class CustomerhomeComponent implements OnInit {
     private _customerService:CustomerloginService, 
     private router: Router,
     public authService:AuthService,
-    private _alertSerive: AlertService
     ) { }
 
   ngOnInit() {
@@ -47,7 +45,7 @@ export class CustomerhomeComponent implements OnInit {
     {
         
     
-        console.log(sessionStorage.getItem('isLoggedIn')+" in oninit a");
+        //console.log(sessionStorage.getItem('isLoggedIn')+" in oninit a");
         this.currentRoute.queryParams.subscribe(           
 
           sessionId => {this.customerId = sessionId['sessionId']; 
@@ -68,23 +66,17 @@ export class CustomerhomeComponent implements OnInit {
 
         //--------------------------------------------------------------------------MinBal
           
-          // this.accountsList.forEach(accountObj => {
+        //  this.accountsList.forEach(accountObj => {
                         
-          //   console.log("in for");
+        //    console.log("in for");
 
-          //   this.bal=accountObj.balance;
+        //    this.bal=accountObj.balance;
 
-          //   if(this.bal< 5000){
-          //     console.log("< 5000");
-          //     this._alertSerive.create(
-          //       "Title", 
-          //       "danger", 
-          //       5000,
-          //       "success Alter" 
-          
-          //       );
-          //   }
-          // });
+        //     if(this.bal< 5000){
+        //       console.log("< 5000");
+
+        //    }
+        //  });
 
 
         //---------------------------------------------------------------------------------
@@ -108,7 +100,7 @@ export class CustomerhomeComponent implements OnInit {
   }
 
   transfer(){
-    this.router.navigate(['/transferfunds']);
+    this.router.navigate(['/transferfunds', this.customerId]);
   }
 
   logout(): void {
@@ -127,18 +119,18 @@ export class CustomerhomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  triggerAlert(){
+  // triggerAlert(){
                 
-      console.log("< 5000");
-      this._alertSerive.create(
-        "Title", 
-        "danger", 
-        5000,
-        "success Alter" 
+  //     console.log("< 5000");
+  //     this._alertSerive.create(
+  //       "Title", 
+  //       "danger", 
+  //       5000,
+  //       "success Alter" 
   
-        );
+  //       );
     
-  }
+  // }
 }
 
 
