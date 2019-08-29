@@ -228,6 +228,17 @@ public class AppController{
         return ResponseEntity.ok(accNums);
     }
 	
+	@GetMapping(path = "/getBal/{accNo}", produces= {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Double> getCurrBal(@PathVariable("accNo") String accNo) {
+        
+        
+        double currBal;
+        Accounts accs = new Accounts();
+        accs = aRepo.getCurrBal(accNo);
+        System.out.println(accs);
+        currBal = accs.getBalance();
+        return ResponseEntity.ok(currBal);
+    }
 	//---------------------------------------------------------------------=
 	
 	@GetMapping(path = "/getCustomerObj/{custId}", produces= {MediaType.APPLICATION_JSON_VALUE})
@@ -342,9 +353,12 @@ public class AppController{
      
      @PostMapping(path = "/customerlogin/update/login", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginData> updateLoginDetails(@RequestBody LoginData ld) {
-         
      
-     System.out.println(ld.getId());
+    	 final String secretKey = "ssshhhhhhhhhhh!!!!";
+    	 EncryptClass enc= new EncryptClass();
+			String encodedPassword = enc.encrypt(ld.getPassword(), secretKey);
+     //System.out.println(ld.getId());
+			ld.setPassword(encodedPassword);
      String type=ldRepo.getUserType(ld.getId());
      ld.setUserType(type);
     

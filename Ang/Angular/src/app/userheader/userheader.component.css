@@ -1,0 +1,23 @@
+.header{
+    /* background-color:#2F2C2C; */
+    background-color: black;
+}
+h1{
+    color: aliceblue;
+}
+.navigation{
+    padding: 20px;
+}
+.text{
+    color: white;
+}
+.logo-img{
+    height:77px;
+    width:200px;    
+}
+.heading{
+    justify-items: left;
+    font-family: fantasy;
+    color: dimgrey;
+    padding-top:15px;
+}

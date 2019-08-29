@@ -40,6 +40,9 @@ public interface AccountsRepo extends JpaRepository<Accounts, String> {
 	
 	@Query(value="select u.accountNo from Accounts u where u.customerId=?1")
     ArrayList<Accounts> getAccountNum(int custId);
+
+	@Query("select u from Accounts u where u.accountNo=?1")
+	Accounts getCurrBal(String accNo);
 	
 
 }
