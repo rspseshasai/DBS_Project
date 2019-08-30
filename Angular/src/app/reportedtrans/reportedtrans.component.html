@@ -1,0 +1,16 @@
+<app-userheader></app-userheader>
+
+<div class="container">
+       <h1>Reported Transactions</h1>
+<table border='1'>
+   <tr ><th>Transaction Id</th> <th>Amount</th> <th>From Account</th> <th>To Account</th> <th>Date </th> </tr>
+   <tr *ngFor='let trans of reportlist'>
+       <td >{{trans.transactionId}}</td>
+       <td>{{trans.transactionAmount}}</td>
+       <td>{{trans.fromAccount}}</td>
+       <td>{{trans.toAccount}}</td>
+       <td>{{trans.transactionDate}}</td>
+   </tr>
+   <tr></tr>
+</table>
+</div>

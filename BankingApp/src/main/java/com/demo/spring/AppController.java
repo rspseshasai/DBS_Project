@@ -1,6 +1,7 @@
 package com.demo.spring;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,6 +30,8 @@ import com.demo.spring.entity.LoginData;
 import com.demo.spring.entity.TempRegister;
 import com.demo.spring.entity.Transactions;
 
+
+
 @RestController
 @CrossOrigin()
 public class AppController{
@@ -42,6 +45,8 @@ public class AppController{
 //	@Autowired
 //	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+
+
 
 	@Autowired
 	private TransactionsReportsRepo reportRepo;
@@ -72,6 +77,7 @@ public class AppController{
 	}
 	
 	
+	
 	@PostMapping(path = "/createtempaccount", produces= {MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TempRegister> processCreateTempAccount(@RequestBody TempRegister tr) {
 		trRepo.save(tr);
@@ -98,6 +104,7 @@ public class AppController{
     int cur_id = ldRepo.getUserId(ld.getUserName(),encodedPassword);
     //System.out.println(cur_id);
     
+ 
 
 	
 			

@@ -1,0 +1,19 @@
+
+<div class="header">
+    <div class="container-fluid">
+        <div class="row navbar-header">
+            <div class="col-md-4 offset-md-1">
+                <img  class="navbar-brand" src="assets/images/logo.jpg" alt="" class="logo-img" routerLink="/customerhome">
+            </div>      
+            <div class="col-md-2 offset-md-1 navigation">
+                <a href="customerhome/:username/profilesettings" class="text" >Settings</a>
+            </div>
+            <div class="col-md-2 navigation" >
+                <a href="/createaccount" class="text" >Create Account</a>
+            </div>  
+            <div class="col-md-2 navigation" >
+                <a href="/customerlogin" (click)="logout()" class="text">Logout</a>
+            </div> 
+        </div>
+    </div>
+</div>

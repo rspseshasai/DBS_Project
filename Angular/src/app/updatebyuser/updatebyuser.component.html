@@ -1,0 +1,73 @@
+<app-userheader></app-userheader>    
+<h1>Update Profile Settings</h1>
+<br />
+<div class="container">
+    <h3>Update Profile Data for </h3> <span>{{cust.customerName}}</span>
+    <form method='POST' #updateProForm='ngForm' (ngSubmit)="onUpdatePro1(cust)">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                        <label>Name</label><input type="text"  class="form-control" name="customerName" [(ngModel)]="cust.customerName">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4">  
+                          <label>Email</label><input type="text" class="form-control" name="email" [(ngModel)]="cust.email">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4 offset-md-4">
+                                <label>Mobile</label><input type="text" class="form-control" name="mobile" [(ngModel)]="cust.mobile">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4 offset-md-4">
+                                    <label>Address</label><input type="text" class="form-control" name="address" [(ngModel)]="cust.address">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4 offset-md-4">
+                                <button class="btn btn-secondary" type="submit">Update</button>
+                            </div>
+                        </div>
+                    </div>
+    </form>
+</div>
+<br />
+<div class="container">
+    <h3>Update Privacy Settings</h3>
+    <form method='POST' #updateProForm='ngForm' (ngSubmit)="onUpdatePro(ld)">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                        <label>Username</label><input type="text" name="userName" class="form-control" [(ngModel)]="ld.userName">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4">  
+                          <label>Password</label><input type="password" name="password" class="form-control" [(ngModel)]="ld.password">
+                    </div>
+                </div>
+            </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4 offset-md-4">
+                                    <!-- <form method="POST" (ngSubmit)="onUpdate()"> -->
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        <!-- </form> -->
+                                <!-- <button class="btn btn-secondary" type="submit">Update</button> -->
+                            </div>
+                        </div>
+                    </div>
+    </form>
+</div>

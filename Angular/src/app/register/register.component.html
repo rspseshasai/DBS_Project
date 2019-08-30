@@ -1,0 +1,120 @@
+<app-headerbefore></app-headerbefore>
+<div class="body-content">     
+<div class="container" >
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+                <div class="row">
+                        <div class="col-md-12">
+                          <h2>Register</h2>
+                        </div>
+                      </div>  
+                      <div class="wrapper fadeInDown">
+                        <div id="formContent" class="bgcontent">
+    <!-- <form method='POST' #regForm='ngForm' (ngSubmit)="onSubmit()" class="formClass"> -->
+            <form method='POST' #regForm='ngForm' (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" class="formClass">
+        <div class="form-group form-border">
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <label>Name</label> -->
+                    <input type="text"class="form-control fadeIn" name="customerName" placeholder="Enter your name" [(ngModel)]="temp.customerName" #nameField='ngModel' required>
+                    <small *ngIf="f.submitted && nameField.invalid && (nameField.dirty || nameField.touched)" class="alert alert-danger">
+                        <small *ngIf="nameField.errors.required">
+                            Name is required.
+                        </small>
+                    </small>
+                    <!-- <span *ngIf='nameField.invalid||nameField.untouched' class='text-danger'>Name is required</span> -->
+            </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-12">
+                        <!-- <label>Username</label> -->
+                        <input type="text"class="form-control fadeIn" name="userName" placeholder="Enter your Username" [(ngModel)]="temp.userName" #userNameField='ngModel'required>
+                        <small *ngIf="f.submitted && userNameField.invalid && (userNameField.dirty || userNameField.touched)" class="alert alert-danger">
+                                <small *ngIf="userNameField.errors.required">
+                                    Username is required.
+                                </small>
+                            </small>
+                    </div>
+                </div>
+            <div class="row">
+                    <div class="col-md-12">
+                        <!-- <label>Email</label> -->
+                        <input type="text"class="form-control fadeIn" name="email" placeholder="Enter your Email" [(ngModel)]="temp.email" #emailField='ngModel' required>
+                        <small *ngIf="f.submitted && emailField.invalid && (emailField.dirty || emailField.touched)" class="alert alert-danger">
+                                <small *ngIf="emailField.errors.required">
+                                    Email is required.
+                                </small>
+                            </small>
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-12">
+                        <!-- <label>Password</label> -->
+                        <input type="password"class="form-control fadeIn" name="password" placeholder="Enter your Password"[(ngModel)]="temp.password" #pwdField='ngModel' required minlength="6">
+                        <small *ngIf="f.submitted && pwdField.invalid && (pwdField.dirty || pwdField.touched)" class="alert alert-danger">
+                                <small *ngIf="pwdField.errors.minlength">
+                                    Password should be 6 characters long.
+                                </small>
+                            </small>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <label>Mobile</label> -->
+                    <input type="text"class="form-control fadeIn" name="mobile" placeholder="Enter your Mobile number" [(ngModel)]="temp.mobile" #mobileField='ngModel' required>
+                    <small *ngIf="f.submitted && mobileField.invalid && (mobileField.dirty || mobileField.touched)" class="alert alert-danger">
+                            <small *ngIf="mobileField.errors.required">
+                                Mobile number is required.
+                            </small>
+                        </small>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <label>Address</label> -->
+                <input type="text"class="form-control fadeIn" name="address" placeholder="Enter your Address" [(ngModel)]="temp.address" #addressField='ngModel' required>
+                <small *ngIf="f.submitted && addressField.invalid && (addressField.dirty || addressField.touched)" class="alert alert-danger">
+                        <small *ngIf="addressField.errors.required">
+                            Address is required.
+                        </small>
+                    </small>
+            </div>
+    </div>
+            <!-- <div class="row">
+                    <div class="col-md-12">
+                        <label>Confirm Password</label>
+                        <input type="password"class="form-control" name="confirmPassword">
+                    </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <label>Account type</label>
+                    <br />
+                    <select name="accountType" class="custom-select" [(ngModel)]="temp.accountType">
+                        <option selected='select'>Account Type</option>
+                        <option *ngFor="let item of accType">
+                            {{item}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+       
+                
+            
+            <br />
+            <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-secondary">Register</button>
+                    </div>
+            </div>
+        </div>
+    </form>
+    </div>
+    </div>
+</div>
+</div>   
+</div>
+<app-footer></app-footer>
+</div>
